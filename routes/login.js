@@ -2,7 +2,8 @@
 const express = require('express');
 const router = express.Router();
 const Login = require('../model/login');
-const bcrypt = require('bcrypt');
+// const bcrypt = require('bcrypt');
+
 // const cookies = require('cookie-parser') 
 const jwt = require('jsonwebtoken')
 // const {authentication} = require('../middleware/tokenAuth')
@@ -36,29 +37,28 @@ router.post('/login', async (req, res) => {
     const verification = usernameVerify.password;
     console.log(verification);
     
-    bcrypt.compare(password, verification).then((match) => {
-        if (!match) {
-            return res.status(400).json({ error: "Password is incorrect" });
-        }
+    // bcrypt.compare(password, verification).then((match) => {
+    //     if (!match) {
+    //         return res.status(400).json({ error: "Password is incorrect" });
+    //     }
         
-        // Password matches, user is authenticated
+    //     // Password matches, user is authenticated
 
-        //accessing username
-        const accessUser = {name: username}
-        //create jwt by using secret key and sign method
-        //whenever user pass username ,it is going to create token for that contains relevant information to the user
-        const token = jwt.sign(accessUser, process.env.ACCESS_TOKEN_SECRET)
-        res.json({token: token})
-        res.json({ message: "User logged in! Congrats" });
-
+    //     //accessing username
+    //     const accessUser = {name: username}
+    //     //create jwt by using secret key and sign method
+    //     //whenever user pass username ,it is going to create token for that contains relevant information to the user
+    //     const token = jwt.sign(accessUser, process.env.ACCESS_TOKEN_SECRET)
+    //     res.json({ message: "User logged in! Congrats" , token: token});
 
 
 
 
-    }).catch((error) => {
-        console.error("Error comparing passwords:", error);
-        res.status(500).json({ error: "Internal server error" });
-    });
+
+    // }).catch((error) => {
+    //     console.error("Error comparing passwords:", error);
+    //     res.status(500).json({ error: "Internal server error" });
+    // });
 
 
 });
