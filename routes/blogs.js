@@ -10,7 +10,7 @@ require('dotenv').config()
 router.get("/", (req, res) => {
     res.send("come to dad")
 })
-router.get('/retrieveAllPost', async(req,res)=> {
+router.get('/retrieveallpost', async(req,res)=> {
     try{
         const posts = await postModel.find();
         res.json(posts);
@@ -46,7 +46,7 @@ function accessToWrite(req,res,next){
     
 
 }
-router.post('/postBlog',accessToWrite, async(req,res) => {
+router.post('/postblog',accessToWrite, async(req,res) => {
     const post = await postModel({
         title: req.body.title,
         content: req.body.content,
@@ -63,7 +63,7 @@ router.post('/postBlog',accessToWrite, async(req,res) => {
 
 //get single post by id
 
-router.get('/getSinglePost/:id', async (req,res) =>{
+router.get('/getsinglepost/:id', async (req,res) =>{
     try{
         const singlePost = await postModel.findById(req.params.id);
         res.json(singlePost);
@@ -73,7 +73,7 @@ router.get('/getSinglePost/:id', async (req,res) =>{
     }
 })
 
-router.patch('/updatePost/:id', async(req,res) =>{
+router.patch('/updatepost/:id', async(req,res) =>{
     try{
         const updatedPost = await postModel.findByIdAndUpdate(req.params.id, {
             $set: {
@@ -89,7 +89,7 @@ router.patch('/updatePost/:id', async(req,res) =>{
     }
 })
 
-router.delete('/deletePost/:id', async(req,res) =>{
+router.delete('/deletepost/:id', async(req,res) =>{
     try{
         const deletedPost = await postModel.findByIdAndDelete(req.params.id);
         res.json(deletedPost);

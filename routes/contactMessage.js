@@ -20,7 +20,7 @@ router.post('/login', (req,res) => {
 
 
 
-router.post('/contactMessage', (async(req,res) => {
+router.post('/contactmessage', (async(req,res) => {
     const contact = new Contact({
         fullName: req.body.fullName,
         email: req.body.email,
@@ -36,7 +36,7 @@ router.post('/contactMessage', (async(req,res) => {
 
 //check if the username is the one trying to access the contact form 
 
-router.get('/contactMessage',authenticateUser, async(req,res) => {
+router.get('/contactmessage',authenticateUser, async(req,res) => {
     try{
         const {name} = req.decoded
         const contacts = await Contact.find({name: name});
