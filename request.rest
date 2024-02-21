@@ -1,7 +1,0 @@
-POST http://localhost:8080/logininfo/login
-content-type:application/json
-
-{
-    "username": "Ruth",
-    "password": "2001"
-}
