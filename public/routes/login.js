@@ -50,10 +50,10 @@ router.post('/register', (req, res) => __awaiter(void 0, void 0, void 0, functio
                     //confirm password is not stored in database because it is unneccessary data it is only used to verify whether user entered correct data
                 });
                 yield store.save();
-                res.json({ message: "USER REGISTERED" });
+                res.json({ status: "ok", message: "USER REGISTERED" });
             }))
                 .catch(() => {
-                res.status(401).json({ error: "SOMETHING WENT WRONG" });
+                res.status(400).json({ error: "SOMETHING WENT WRONG" });
             });
         }
     }
@@ -84,7 +84,7 @@ router.post('/login', (req, res, next) => {
         }
         const accessUser = { username: req.body.username, password: req.body.password };
         const token = jsonwebtoken_1.default.sign(accessUser, process.env.ACCESS_TOKEN_SECRET);
-        res.json({ message: "User logged in! Congrats", token: token });
+        res.json({ status: "ok", message: "User logged in! Congrats", token: token });
     })(req, res, next);
 });
 // router.post('/login', async(req:customD,res:Response) => {

@@ -35,7 +35,7 @@ function allowUserToSubmitMessage(req, res, next) {
                     return next(err);
                 }
                 if (!user) {
-                    return res.status(400).json({ status: 400, error: "please login is required" });
+                    return res.status(401).json({ status: 401, error: "please login is required" });
                 }
                 const contact1 = new contactInq_1.default({
                     fullName: req.body.fullName,
@@ -43,7 +43,7 @@ function allowUserToSubmitMessage(req, res, next) {
                     message: req.body.message
                 });
                 const postMessage = yield contact1.save();
-                res.json("send successfully");
+                res.json({ status: "ok", copyAndUpdate: postMessage });
             }
             catch (err) {
                 next(err);
@@ -59,7 +59,7 @@ function retrieveAllMessage(req, res, next) {
                     return next(err);
                 }
                 if (!user)
-                    return res.status(400).json({ status: 400, error: "please login is required" });
+                    return res.status(401).json({ status: 401, error: "please login is required" });
                 const contacts = yield contactInq_1.default.find();
                 res.json({ messages: contacts });
             }

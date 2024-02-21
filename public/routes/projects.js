@@ -45,7 +45,7 @@ function allowUserToSeePostedProject(req, res, next) {
                     return next();
                 }
                 if (!user) {
-                    return res.status(400).json({ status: 400, error: "please login is required" });
+                    return res.status(401).json({ status: 400, error: "please login is required" });
                 }
                 const projects = yield projectsModel_1.default.find();
                 res.json({ projects: projects });
@@ -64,7 +64,7 @@ function allowPostProject(req, res, next) {
                     return next(err);
                 }
                 if (!user) {
-                    return res.status(400).json({ status: 400, error: "please login is required" });
+                    return res.status(401).json({ status: 401, error: "please login is required" });
                 }
                 const { title, description, demo } = req.body;
                 const project = new projectsModel_1.default({
@@ -89,7 +89,7 @@ function allowUpdateProject(req, res, next) {
                     return next(err);
                 }
                 if (!user) {
-                    return res.status(400).json({ status: 400, error: "please login is required" });
+                    return res.status(401).json({ status: 401, error: "please login is required" });
                 }
                 const updatePro = yield projectsModel_1.default.findByIdAndUpdate(req.params.id, {
                     $set: {
@@ -116,7 +116,7 @@ function allowDeleteProject(req, res, next) {
                     return next(err);
                 }
                 if (!user) {
-                    return res.status(400).json({ status: 400, error: "please login is required" });
+                    return res.status(401).json({ status: 401, error: "please login is required" });
                 }
                 const deletePro = yield projectsModel_1.default.findByIdAndDelete(req.params.id);
                 if (!deletePro)

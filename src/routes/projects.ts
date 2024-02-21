@@ -49,7 +49,7 @@ async function allowUserToSeePostedProject(req:Request, res:Response, next:NextF
                 return next()
             }
             if(!user){
-                return res.status(400).json({status: 400, error: "please login is required"})
+                return res.status(401).json({status: 400, error: "please login is required"})
             }
             const projects = await Project.find();
             res.json({projects: projects})
@@ -67,7 +67,7 @@ async function allowPostProject (req:Request, res:Response, next:NextFunction) {
                 return next(err)
             }
             if(!user){
-                return res.status(400).json({status: 400, error: "please login is required"})
+                return res.status(401).json({status: 401, error: "please login is required"})
             }
             const {title, description, demo} = req.body;
             const project = new Project({
@@ -91,7 +91,7 @@ async function allowUpdateProject (req:Request, res:Response, next:NextFunction)
                 return next(err)
             }
             if(!user){
-                return res.status(400).json({status: 400, error: "please login is required"})
+                return res.status(401).json({status: 401, error: "please login is required"})
             }
             const updatePro = await Project.findByIdAndUpdate(req.params.id, {
                 $set: {
@@ -115,7 +115,7 @@ async function allowDeleteProject (req:Request, res:Response, next:NextFunction)
                 return next(err)
             }
             if(!user){
-                return res.status(400).json({status: 400, error: "please login is required"})
+                return res.status(401).json({status: 401, error: "please login is required"})
             }
             const deletePro = await Project.findByIdAndDelete(req.params.id)
             if (!deletePro) return res.status(400).send({msg:"id not found"})

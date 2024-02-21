@@ -59,7 +59,7 @@ function authenticateToSeeAllBlogIn(req, res, next) {
                     return res.status(400).json({ status: 400, error: "invalid token" });
                 }
                 const posts = yield postModel_1.default.find();
-                res.json(posts);
+                res.json({ status: 200, data: posts });
             }
             catch (error) {
                 next(error);
@@ -88,7 +88,7 @@ function authenticateToPostBlog(req, res, next) {
                     image: imagePath || req.file || ''
                 });
                 yield post.save();
-                res.json("Successful post blog");
+                res.json({ status: "ok", data: "Successfully posted blog" });
             }
             catch (error) {
                 next(error);
@@ -109,7 +109,7 @@ function accessSingleBlog(req, res, next) {
                 const singlePost = yield postModel_1.default.findById(req.params.id);
                 if (singlePost === null)
                     res.status(400).json({ status: 400, error: "id not found" });
-                res.json(singlePost);
+                res.json({ status: "ok", data: singlePost });
             }
             catch (error) {
                 next(error);
@@ -128,13 +128,10 @@ function deleteSingleBlog(req, res, next) {
                     return res.status(400).json({ status: 400, error: "invalid token" });
                 }
                 const getId = req.params.id;
-                // if(getId === undefined){
-                //     return res.status(400).json({status: 400, error: "id not found"})
-                // }
                 const result = yield postModel_1.default.findByIdAndDelete(getId);
                 if (result === null)
-                    res.json({ message: "post already deleted" });
-                res.json("successful deleted post");
+                    res.status(410).json({ message: "post already deleted" });
+                res.json({ status: "ok", data: "successfully deleted post" });
             }
             catch (error) {
                 next(error);
@@ -162,7 +159,7 @@ function updateSingleBlog(req, res, next) {
                 if (updatedPost === null)
                     res.status(400).json({ status: 400, error: "id not found" });
                 console.log(updatedPost);
-                res.json({ copyAndUpdate: updatedPost });
+                res.json({ status: "ok", copyAndUpdate: updatedPost });
             }
             catch (error) {
                 next(error);

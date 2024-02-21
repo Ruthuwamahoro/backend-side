@@ -57,11 +57,12 @@ async function authenticateToSeeAllBlogIn (req:Request, res:Response, next: Func
                 return next(err)
             }
             if(!user){
+
                 return res.status(400).json({status: 400, error: "invalid token"})
     
             }
             const posts = await postModel.find();
-            res.json(posts);
+            res.json({status: 200, data:posts});
         } catch(error){
             next(error)
         }
@@ -97,7 +98,7 @@ async function authenticateToPostBlog (req:Request, res:Response, next: Function
 
             });
             await post.save();
-            res.json("Successful post blog");
+            res.json({status: "ok",data:"Successfully posted blog"});
         } catch(error){
             next(error)
         }
@@ -120,7 +121,7 @@ async function accessSingleBlog (req:Request, res:Response, next: Function) {
             }
             const singlePost = await postModel.findById(req.params.id);
             if(singlePost === null) res.status(400).json({status: 400, error: "id not found"})
-            res.json(singlePost);
+            res.json({status: "ok",data:singlePost});
         } catch(error){
             next(error)
         }
@@ -144,8 +145,8 @@ async function deleteSingleBlog (req:Request, res:Response, next: Function) {
             }
             const getId = req.params.id
             const result = await postModel.findByIdAndDelete(getId);
-            if(result === null) res.json({message: "post already deleted"})
-            res.json("successful deleted post");
+            if(result === null) res.status(410).json({message: "post already deleted"})
+            res.json({status: "ok",data:"successfully deleted post"});
         } catch(error){
             next(error)
         }
@@ -175,7 +176,7 @@ async function updateSingleBlog (req:Request, res:Response, next: Function) {
             }, {new: true});
             if(updatedPost === null) res.status(400).json({status: 400, error: "id not found"})
             console.log(updatedPost)
-            res.json({copyAndUpdate:  updatedPost});
+            res.json({status: "ok",copyAndUpdate:  updatedPost});
         } catch(error){
             next(error)
         }

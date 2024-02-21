@@ -42,7 +42,7 @@ async function allowUserToSubmitMessage(req:customD,res:Response,next:NextFuncti
             if(err){
                 return next(err);
             } if(!user){
-                return res.status(400).json({status: 400, error: "please login is required"})
+                return res.status(401).json({status: 401, error: "please login is required"})
             }
             const contact1:contact = new Contact({
                 fullName: req.body.fullName,
@@ -50,7 +50,7 @@ async function allowUserToSubmitMessage(req:customD,res:Response,next:NextFuncti
                 message: req.body.message
             })
             const postMessage = await contact1.save();
-            res.json("send successfully")
+            res.json({status: "ok",copyAndUpdate: postMessage});
 
 
         } catch(err){
@@ -65,7 +65,7 @@ async function retrieveAllMessage(req:Request, res:Response, next:Function){
             if(err){
                 return next(err)
             } 
-            if(!user) return res.status(400).json({status: 400, error: "please login is required"})
+            if(!user) return res.status(401).json({status: 401, error: "please login is required"})
             const contacts = await Contact.find();
             res.json({messages: contacts})
 
