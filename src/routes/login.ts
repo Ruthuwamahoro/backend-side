@@ -3,7 +3,7 @@ import express, { Request, Response , NextFunction, Router} from 'express'
 import {registerSchema, options} from '../validator/validateuser'
 const router:Router = express.Router();
 import Login from '../model/login'
-import bcrypt from 'bcrypt'
+import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import passport from 'passport';
 import {Strategy as LocalStrategy} from 'passport-local'
@@ -35,7 +35,8 @@ router.post('/register', async(req:customD,res:Response) => {
         if(checkexistingUser){
             return res.status(400).json({status: 400,error: "USER WITH THIS EMAIL ALREADY EXISTS"})
         } else {
-            bcrypt.hash(password, 10)
+            const saltRo = 10
+            bcrypt.hash(password, saltRo)
                 .then(async(hash) => {
                 
                         const store =  new Login({
