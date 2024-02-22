@@ -86,7 +86,9 @@ router.post('/login',(req:customD,res:Response, next: Function)=> {
         const accessUser = {username: req.body.username, password: req.body.password}
         console.log(process.env.ACCESS_TOKEN_SECRET)
         const token = jwt.sign(accessUser, process.env.ACCESS_TOKEN_SECRET!)
+        res.cookie("token", token)
         res.json({ status: "ok",message: "User logged in! Congrats", token: token})
+        
     })(req,res,next)
     
 })
