@@ -5,7 +5,7 @@ import router from './routes/blogs'
 import contact from './routes/contactMessage'
 import login from './routes/login'
 import projects from './routes/projects'
-// import userRouter from './routes/userprofile'
+import userRouter from './routes/userprofile'
 
 
 
@@ -17,7 +17,7 @@ app.use('/post', router)
 app.use('/contact', contact)
 app.use('/logininfo', login)
 app.use('/project', projects)
-// app.use('/profile', userRouter)
+app.use('/adminprofile', userRouter)
 app.use(express.json())
 
 mongoose.connect(process.env.DATABASE_URL!)

@@ -4,7 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
-const contactMes = new mongoose_1.default.Schema({
+const profileInfo = new mongoose_1.default.Schema({
     name: {
         type: String,
         required: true
@@ -18,5 +18,5 @@ const contactMes = new mongoose_1.default.Schema({
         required: true
     }
 });
-const Contact = mongoose_1.default.model('contact', contactMes);
-exports.default = Contact;
+const Profile = mongoose_1.default.model('profile', profileInfo);
+exports.default = Profile;

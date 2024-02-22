@@ -1,10 +1,10 @@
 import mongoose, {Document} from 'mongoose';
-export interface contact extends Document {
+export interface profile extends Document {
     name: string,
     profileImage:string,
-    status: boolean
+    status: string
 }
-const contactMes = new mongoose.Schema<contact>({
+const profileInfo = new mongoose.Schema<profile>({
     name: {
         type:String,
         required: true
@@ -14,10 +14,10 @@ const contactMes = new mongoose.Schema<contact>({
         required: true
     },
     status: {
-        type:Boolean,
+        type:String,
         required:true 
     }
 })
 
-const Contact = mongoose.model<contact>('contact', contactMes);
-export default Contact
+const Profile = mongoose.model<profile>('profile', profileInfo);
+export default Profile
