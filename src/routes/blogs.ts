@@ -6,7 +6,6 @@ import express, {Request,Response, NextFunction, Router} from 'express'
 import postModel , { Ipost } from "../model/postModel";
 import Login from '../model/login'
 import multer from 'multer';
-import jwt from 'jsonwebtoken'
 import cookieParser from 'cookie-parser'; 
 import path from 'path'
 import passport from 'passport';
@@ -42,7 +41,6 @@ const upload = multer ({
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 
 router.get('/retrieveallpost', authenticateToSeeAllBlogIn);
 router.post('/postblog', upload.single('image'),authenticateToPostBlog)

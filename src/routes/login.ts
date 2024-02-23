@@ -18,6 +18,51 @@ interface customD extends Request {
 }
 require ('dotenv').config();
 
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+//documentation
+
+// /**
+//  * @openapi
+//  * components:
+//  *   schemas:
+//  *     Login:
+//  *       type: object
+//  *       properties:
+//  *         email:
+//  *           type: string
+//  *         username:
+//  *           type: string
+//  *         password:
+//  *           type: string
+//  *       required: [email, username, password]
+//  */
+
+
+
+
+// /**
+//  * @openapi
+//  * /logininfo/register:
+//  *   post:
+//  *     summary: Register for new user.
+//  *     description: Register for an account with the given information. If a user already exists with that email or username, it will return a 400 status code with an error message.
+//  *     responses:
+//  *       '200':
+//  *         description: Successfully registered.
+//  */
+
+
+
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 //after dealing with function,next is to configure passport by calling initialize and session from express-session()
 
 router.use(cookieParser())

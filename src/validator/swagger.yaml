@@ -1,0 +1,507 @@
+openapi: 3.0.0
+info:
+  title: Welcome to REST API DOCS with
+  version: 1.0.0
+  description: This is documentation on REST API for Ruth's portfolio with Typescript,node,express,mongoDb and documented by using swagger-jsdoc and swagger-ui-express
+  termsOfService: http://swagger.io/terms/
+  contact:
+    name: Ruth Uwamhoro
+    url: http://swagger.io
+    email: 0TqoZ@example.com
+  license:
+    name: Apache 2.0
+    url: https://github.com/Ruthuwamahoro/backend-side
+    email: ruthuwamahoro250@gmail.com
+schemes:
+  - https
+  - http
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: API Key Authentication
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Bearer Authentication
+security:
+  - bearerAuth: []
+  - ApiKeyAuth: []
+
+paths:
+  "/logininfo/register":
+    post:
+      summary: register for an account
+      description: This can be used by anyone who wants to create an account on our platform.
+      requestBody:
+        description: user body details
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: ruth@gmail.com
+                username:
+                  type: string
+                  example: ruth123
+                password:
+                  type: string
+                  example: 123456
+                ConfirmPassword:
+                  type: string
+                  example: 123456
+              required: [email, username, password, ConfirmPassword]
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: ok
+                  message:
+                    type: string
+                    example: user registered!
+
+  "/logininfo/login":
+    post:
+      summary: please login to the account
+      description: This can be used by registered user to login to an account.must has username and password.
+      requestBody:
+        description: user body details
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  example: ruth123
+                password:
+                  type: string
+                  example: 123456
+              required: [username, password]
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: ok
+                  message:
+                    type: string
+                    example: user registered!
+                  token:
+                    type: string
+
+  #retrieve all post
+
+  "/post/retrieveallpost":
+    get:
+      summary: list all blog post hosted of on my portfolio
+      description: User having account and already logged in can access this blog posts.
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: ok
+                  data:
+                    type: array
+                    properties:
+                      _id:
+                        type: string
+                        example: id
+                      title:
+                        type: string
+                        example: title
+                      content:
+                        type: string
+                        example: content
+                      description:
+                        type: string
+                        example: description
+                      image:
+                        type: string
+                      created_at:
+                        type: string
+
+  # post blog
+
+  "/post/postblog":
+    post:
+      summary: publish an article
+      description: Only authenticated user can post blog.
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: title
+                content:
+                  type: string
+                  example: content
+                description:
+                  type: string
+                  example: description
+                image:
+                  type: string
+                  format: binary
+              required: [title, content, description, image]
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: ok
+                  data:
+                    type: string
+                    example: blog created
+
+  # get single post
+
+  "/post/getsinglepost/{id}":
+    get:
+      summary: get single blog
+      description: Only authenticated user can see blog.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: ok
+                  data:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                        example: id
+                      title:
+                        type: string
+                        example: title
+                      content:
+                        type: string
+                        example: content
+                      description:
+                        type: string
+                        example: description
+                      image:
+                        type: string
+                      created_at:
+                        type: string
+
+  # delete single post
+
+  "/post/deletepost/{id}":
+    delete:
+      summary: delete an article
+      description: Only authenticated user can delete blog.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: ok
+                  data:
+                    type: string
+                    example: blog deleted
+
+  # update single post
+
+  "/post/updatepost/{id}":
+    patch:
+      summary: update an article
+      description: Only authenticated user can update blog.
+      consumes:
+        - multipart/form-data
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+                title:
+                  type: string
+                  example: title
+                content:
+                  type: string
+                  example: content
+                description:
+                  type: string
+                  example: description
+                image:
+                  type: string
+                  format: binary
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: ok
+                  data:
+                    type: string
+                    example: blog updated
+
+  # retrieve projects posted
+
+  "/project/getallprojects":
+    get:
+      summary: list all blog project of hosted on my portfolio
+      description: User having account and already logged in can access this project.
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: ok
+                  projects:
+                    type: array
+                    properties:
+                      _id:
+                        type: string
+                        example: id
+                      title:
+                        type: string
+                        example: title
+                      description:
+                        type: string
+                        example: content
+                      demo:
+                        type: string
+                        example: description
+
+  # post project
+
+  "/project/postproject":
+    post:
+      summary: publish an project
+      description: Only authenticated user can publish project.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: title
+                description:
+                  type: string
+                  example: content
+                demo:
+                  type: string
+                  example: description
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: ok
+                  data:
+                    type: string
+                    example: project created
+
+  # "/project/getsinglepost/{id}":
+  #   get:
+  #     summary: publish an article
+  #     description: Only authenticated user can post blog.
+  #     parameters:
+  #       - name: id
+  #         in: path
+  #         required: true
+  #         schema:
+  #           type: string
+  #     responses:
+  #       "200":
+  #         description: Success
+  #         content:
+  #           application/json:
+  #             schema:
+  #               type: object
+  #               properties:
+  #                 status:
+  #                   type: string
+  #                   example: ok
+  #                 data:
+  #                   type: object
+  #                   properties:
+  #                     _id:
+  #                       type: string
+  #                       example: id
+  #                     title:
+  #                       type: string
+  #                       example: title
+  #                     content:
+  #                       type: string
+  #                       example: content
+  #                     description:
+  #                       type: string
+  #                       example: description
+  #                     image:
+  #                       type: string
+  #                     created_at:
+  #                       type: string
+
+  # delete single project
+
+  "/project/deleteproject/{id}":
+    delete:
+      summary: delete an project
+      description: Only authenticated user can delete project.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: ok
+                  data:
+                    type: string
+                    example: project deleted
+
+  # update single project
+
+  "/project/updateproject/{id}":
+    patch:
+      summary: update  project
+      description: Only authenticated user can update project.
+      consumes:
+        - multipart/form-data
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+                title:
+                  type: string
+                  example: title
+                description:
+                  type: string
+                  example: content
+                demo:
+                  type: string
+                  example: description
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: ok
+                  projects:
+                    type: array
+                    properties:
+                      _id:
+                        type: string
+                        example: id
+                      title:
+                        type: string
+                        example: title
+                      description:
+                        type: string
+                        example: content
+                      demo:
+                        type: string
+                        example: description
