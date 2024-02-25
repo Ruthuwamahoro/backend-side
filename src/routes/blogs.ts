@@ -13,8 +13,6 @@ import { Strategy, ExtractJwt } from 'passport-jwt'
 import { StrategyOptions } from 'passport-jwt';
 require ('dotenv').config();
 
-
-
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 const router:Router = express.Router();
 require('dotenv').config()
@@ -37,9 +35,6 @@ const storage = multer.diskStorage({
 const upload = multer ({
     storage : storage
 })
-
-
-
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 router.get('/retrieveallpost', authenticateToSeeAllBlogIn);
@@ -69,10 +64,6 @@ async function authenticateToSeeAllBlogIn (req:Request, res:Response, next: Func
     })(req,res,next)
     
 }
-
-
-
-
 
 async function authenticateToPostBlog (req:Request, res:Response, next: Function) {
     passport.authenticate('jwt', {session:false}, async(err:any, user:any, info:any)=>{
@@ -106,7 +97,6 @@ async function authenticateToPostBlog (req:Request, res:Response, next: Function
     
 }
 
-
 async function accessSingleBlog (req:Request, res:Response, next: Function) {
     passport.authenticate('jwt', {session:false}, async(err:any, user:any, info:any)=>{
         try{
@@ -128,8 +118,6 @@ async function accessSingleBlog (req:Request, res:Response, next: Function) {
     })(req,res,next)
     
 }
-
-
 
 async function deleteSingleBlog (req:Request, res:Response, next: Function) {
     passport.authenticate('jwt', {session:false}, async(err:any, user:any, info:any)=>{
@@ -153,7 +141,6 @@ async function deleteSingleBlog (req:Request, res:Response, next: Function) {
     })(req,res,next)
     
 }
-
 
 async function updateSingleBlog (req:Request, res:Response, next: Function) {
     passport.authenticate('jwt', {session:false}, async(err:any, user:any, info:any)=>{
@@ -184,10 +171,6 @@ async function updateSingleBlog (req:Request, res:Response, next: Function) {
     
 }
 
-
-
-
-
 /////////////////////////////////////////////////////////////////////////////////////////
 
 const jwtOptions:StrategyOptions  = {
@@ -209,7 +192,5 @@ passport.use(new Strategy(jwtOptions, async(jwtPayload, done:Function)=>{
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-
-
 
 export default router; 

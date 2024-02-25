@@ -6,8 +6,8 @@ import contact from './routes/contactMessage'
 import login from './routes/login'
 import projects from './routes/projects'
 import userRouter from './routes/userprofile'
-import dotenv from 'dotenv'
-import swaggerDocs from './validator/swagger';
+import * as dotenv from 'dotenv'
+//import swaggerDocs from './validator/swagger';
 dotenv.config()
 const app = express()
 
@@ -28,5 +28,8 @@ mongoose.connect(process.env.DATABASE_URL!)
 
 app.listen((port), () => {
     console.log(`Server is running on port ${port}`);
-    swaggerDocs(app, port);
+    //swaggerDocs(app, port);
 })
+
+
+export default app

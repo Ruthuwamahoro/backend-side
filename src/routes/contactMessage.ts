@@ -23,17 +23,10 @@ router.use(express.json())
 router.use(passport.initialize())
 
 
-
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
 
 router.post('/contactmessage', allowUserToSubmitMessage)
 router.get('/contactmessage', retrieveAllMessage ) 
-
-
-
 
 
 async function allowUserToSubmitMessage(req:customD,res:Response,next:NextFunction){
@@ -75,8 +68,6 @@ async function retrieveAllMessage(req:Request, res:Response, next:Function){
     })(req,res,next)
 
 }
-
-
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////

@@ -3,13 +3,8 @@ info:
   title: Welcome to REST API DOCS with
   version: 1.0.0
   description: This is documentation on REST API for Ruth's portfolio with Typescript,node,express,mongoDb and documented by using swagger-jsdoc and swagger-ui-express
-  termsOfService: http://swagger.io/terms/
   contact:
-    name: Ruth Uwamhoro
-    url: http://swagger.io
-    email: 0TqoZ@example.com
-  license:
-    name: Apache 2.0
+    name: Ruth Uwamahoro
     url: https://github.com/Ruthuwamahoro/backend-side
     email: ruthuwamahoro250@gmail.com
 schemes:
@@ -34,6 +29,8 @@ security:
 paths:
   "/logininfo/register":
     post:
+      tags:
+        - register
       summary: register for an account
       description: This can be used by anyone who wants to create an account on our platform.
       requestBody:
@@ -75,6 +72,8 @@ paths:
 
   "/logininfo/login":
     post:
+      tags:
+        - login
       summary: please login to the account
       description: This can be used by registered user to login to an account.must has username and password.
       requestBody:
@@ -113,6 +112,8 @@ paths:
 
   "/post/retrieveallpost":
     get:
+      tags:
+        - blog
       summary: list all blog post hosted of on my portfolio
       description: User having account and already logged in can access this blog posts.
       responses:
@@ -312,6 +313,7 @@ paths:
 
   "/project/getallprojects":
     get:
+      tags:
       summary: list all blog project of hosted on my portfolio
       description: User having account and already logged in can access this project.
       responses:

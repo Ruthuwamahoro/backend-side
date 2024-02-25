@@ -18,49 +18,6 @@ interface customD extends Request {
 }
 require ('dotenv').config();
 
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-//documentation
-
-// /**
-//  * @openapi
-//  * components:
-//  *   schemas:
-//  *     Login:
-//  *       type: object
-//  *       properties:
-//  *         email:
-//  *           type: string
-//  *         username:
-//  *           type: string
-//  *         password:
-//  *           type: string
-//  *       required: [email, username, password]
-//  */
-
-
-
-
-// /**
-//  * @openapi
-//  * /logininfo/register:
-//  *   post:
-//  *     summary: Register for new user.
-//  *     description: Register for an account with the given information. If a user already exists with that email or username, it will return a 400 status code with an error message.
-//  *     responses:
-//  *       '200':
-//  *         description: Successfully registered.
-//  */
-
-
-
-
-
-
-
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //after dealing with function,next is to configure passport by calling initialize and session from express-session()
@@ -72,7 +29,7 @@ router.use(passport.initialize())
 router.post('/register', async(req:customD,res:Response) => {
     const result = registerSchema.validate(req.body, options)
     if(result.error){
-        const messageError = result.error.details.map((error) => error.message).join(', ')
+        const messageError = result.error.details.map((error:any) => error.message).join(', ')
         res.status(400).json({status:400,error: messageError})
     } else {
         const {email, username, password} = result.value
@@ -138,77 +95,4 @@ router.post('/login',(req:customD,res:Response, next: Function)=> {
     
 })
 
-
-
-
-
-
-
-
-
-
-
-// router.post('/login', async(req:customD,res:Response) => {
-//     const username = req.body.username;
-//     const password = req.body.password
-//     if(!username){
-//         return res.status(400).json({error: "No provided Username"})
-//     } else if(!password){
-//         return res.status(400).json({error: "No provided Password"})
-//     }
-
-//     const usernameVerify = await Login.findOne({username})
-//     const passwordVerify = await Login.findOne({password})
-//     if(!usernameVerify && !passwordVerify){
-//         return res.status(400).json({status: 400,error: "Username and/ or password does not match"})
-//     }else {
-//         if(usernameVerify !== null){
-//             const verification = usernameVerify.password;
-//             bcrypt.compare(password, verification)
-//                 .then((match) => {
-//                 if (!match) {
-//                     return res.status(400).json({status: 400, error: "Password is incorrect" });
-//                 }
-                
-//                 // Password matches, user is authenticated
-
-//                 //accessing username
-//                 const accessUser = {name: username, password: password}
-//                 //create jwt by using secret key and sign method
-//                 //whenever user pass username ,it is going to create token for that contains relevant information to the user
-//                 const token = jwt.sign(accessUser, process.env.ACCESS_TOKEN_SECRET!)
-//                 res.cookie("token", token);
-//                 res.json({ message: "User logged in! Congrats"});
-                
-//             })
-//         }
-
-        
-        
-//     } 
-// })
-
-
-
-//create middleware for authentication
-
-// function authentication (req:customD,res:Response,next:NextFunction){
-//     const getAuthorizationHeader = req.headers['authorization'];
-//     const token = getAuthorizationHeader && getAuthorizationHeader.split(' ')[1]
-//     if(!token){
-        
-//         return res.sendStatus(403)
-//     }
-//     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET!, (err: Error | null, accessUser) => {
-//         if(err){
-//             console.error('JWT verification error:', err);
-//             return res.sendStatus(403)
-//         }else{
-//             req.accessUser = accessUser
-//             next()
-//         }
-//     })
-
-
-// }
 export default router; 
