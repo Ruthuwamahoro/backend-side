@@ -22,7 +22,7 @@ test('get all blogs', async() => {
 })
 
 
-test('get all blogs with invalid email', async() => {
+test('unathorized get of  all blogs ', async() => {
 
     try {
         const blo = await axios.get('http://localhost:8080/post/retrieveallpost')
@@ -337,6 +337,30 @@ test('delete single projects', async() => {
         console.log(err)
     }
 })
+
+
+//contact message
+
+
+test('get all contact messages', async() => {
+
+    try {
+        const userInfo = {
+            "username": "testingR1",
+            "password": "test1234",
+        }
+        const response = await axios.post('http://localhost:8080/logininfo/login', userInfo); 
+        const token = response.data.token
+        const blo = await axios.get('http://localhost:8080/contact/contactmessage', { headers: { Authorization: `Bearer ${token}` } });
+        expect(blo.status).toBe(200);
+        expect(Array.isArray(blo.data.data)).toBe(true);
+        console.log(blo.data)
+    } catch (err) {
+        console.log(err)
+    }
+})
+
+
 
 
 

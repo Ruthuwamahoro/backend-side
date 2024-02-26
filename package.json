@@ -7,7 +7,8 @@
     "test": "jest --coverage",
     "start": "npm run build &&  node public/app.js",
     "build": "rm -rf public && tsc",
-    "watch:js": "nodemon app.ts"
+    "watch:js": "nodemon app.ts",
+    "testWatch": "jest --watchAll"
   },
   "keywords": [],
   "author": "",
@@ -58,6 +59,7 @@
     "jest": "^29.7.0",
     "supertest": "^6.3.4",
     "ts-jest": "^29.1.2",
+    "ts-node": "^10.9.2",
     "typescript": "^5.3.3"
   }
 }
