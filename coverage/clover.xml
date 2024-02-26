@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1708962207797" clover="3.2.0">
-  <project timestamp="1708962207797" name="All files">
-    <metrics statements="330" coveredstatements="160" conditionals="68" coveredconditionals="10" methods="59" coveredmethods="7" elements="457" coveredelements="177" complexity="0" loc="330" ncloc="330" packages="4" files="13" classes="13"/>
+<coverage generated="1708962688954" clover="3.2.0">
+  <project timestamp="1708962688954" name="All files">
+    <metrics statements="329" coveredstatements="160" conditionals="68" coveredconditionals="10" methods="58" coveredmethods="7" elements="455" coveredelements="177" complexity="0" loc="329" ncloc="329" packages="4" files="13" classes="13"/>
     <package name="src">
       <metrics statements="25" coveredstatements="24" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="2"/>
       <file name="app.ts" path="C:\Users\HP\Documents\backend-side\src\app.ts">
@@ -360,20 +360,19 @@
       </file>
     </package>
     <package name="src.validator">
-      <metrics statements="15" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="0"/>
+      <metrics statements="14" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
       <file name="swagger.ts" path="C:\Users\HP\Documents\backend-side\src\validator\swagger.ts">
-        <metrics statements="11" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="0"/>
+        <metrics statements="10" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
         <line num="1" count="0" type="stmt"/>
         <line num="2" count="0" type="stmt"/>
         <line num="3" count="0" type="stmt"/>
         <line num="4" count="0" type="stmt"/>
-        <line num="5" count="0" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
-        <line num="9" count="0" type="stmt"/>
+        <line num="7" count="0" type="stmt"/>
         <line num="10" count="0" type="stmt"/>
-        <line num="11" count="0" type="stmt"/>
         <line num="13" count="0" type="stmt"/>
-        <line num="17" count="0" type="stmt"/>
+        <line num="14" count="0" type="stmt"/>
+        <line num="16" count="0" type="stmt"/>
+        <line num="19" count="0" type="stmt"/>
       </file>
       <file name="validateuser.ts" path="C:\Users\HP\Documents\backend-side\src\validator\validateuser.ts">
         <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
