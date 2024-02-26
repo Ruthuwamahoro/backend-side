@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest --coverage",
     "start": "npm run build &&  node public/app.js",
-    "build": "tsc",
+    "build": "rm -rf public && tsc",
     "watch:js": "nodemon app.ts"
   },
   "keywords": [],
