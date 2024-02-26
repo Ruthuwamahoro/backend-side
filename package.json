@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --coverage",
-    "start": "npm run build && npm run watch:js",
+    "start": "npm run build &&  node public/app.js",
     "build": "tsc",
-    "watch:js": "nodemon app.js"
+    "watch:js": "nodemon app.ts"
   },
   "keywords": [],
   "author": "",

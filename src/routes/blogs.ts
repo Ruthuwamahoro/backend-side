@@ -43,7 +43,7 @@ router.get('/getsinglepost/:id',accessSingleBlog)
 router.delete('/deletepost/:id',deleteSingleBlog)
 router.patch('/updatepost/:id', updateSingleBlog)
 
-async function authenticateToSeeAllBlogIn (req:Request, res:Response, next: Function) {
+export async function authenticateToSeeAllBlogIn (req:Request, res:Response, next: Function) {
     passport.authenticate('jwt', {session:false}, async(err:any, user:any, info:any)=>{
         try{
             if(err){
@@ -193,4 +193,4 @@ passport.use(new Strategy(jwtOptions, async(jwtPayload, done:Function)=>{
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-export default router; 
+export default router
