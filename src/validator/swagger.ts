@@ -7,6 +7,7 @@ import logger from 'winston'
 function swaggerDocs(app:Express,port:number) {
     app.use(express.json())
     app.use('/api-doc', swaggerUi.serve, swaggerUi.setup(swaggerJsdoc))
+    app.get('/api-doc')
     logger.info(`Swagger docs available at http://localhost:${port}/api-doc`)
 }
 
