@@ -1,7 +1,7 @@
 import express,{Express} from 'express'
 import * as YAML from 'yamljs'
 import swaggerUi from 'swagger-ui-express'
-const swaggerJsdoc = YAML.load('./validator/swagger.yaml')
+const swaggerJsdoc = YAML.load('./src/validator/swagger.yaml')
 import logger from 'winston'
 
 function swaggerDocs(app:Express,port:number) {
