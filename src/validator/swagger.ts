@@ -1,17 +1,23 @@
-import express,{Express} from 'express'
-import * as YAML from 'yamljs'
-import swaggerUi from 'swagger-ui-express'
-const swaggerJsdoc = YAML.load('./validator/swagger.yaml')
-import logger from 'winston'
+import express, { Express } from 'express';
+import * as YAML from 'yamljs';
+import swaggerUi from 'swagger-ui-express';
+import logger from 'winston';
 
-function swaggerDocs(app:Express,port:number) {
-    app.use(express.json())
-    app.use('/api-doc', swaggerUi.serve, swaggerUi.setup(swaggerJsdoc))
-    logger.info(`Swagger docs available at http://localhost:${port}/api-doc`)
+// Load Swagger YAML file
+const swaggerDoc = YAML.load('./validator/swagger.yaml');
+
+function swaggerDocs(app: Express, port: number) {
+    app.use(express.json());
+    
+    // Serve Swagger UI
+    app.use('/api-docs', swaggerUi.serve);
+    app.get('/api-docs', swaggerUi.setup(swaggerDoc));
+
+    logger.info(`Swagger docs available at http://localhost:${port}/api-docs`);
 }
 
+export default swaggerDocs;
 
-export default swaggerDocs
 
 
 

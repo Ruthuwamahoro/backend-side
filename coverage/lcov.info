@@ -596,7 +596,7 @@ BRH:1
 end_of_record
 TN:
 SF:src\validator\swagger.ts
-FN:9,swaggerDocs
+FN:7,swaggerDocs
 FNF:1
 FNH:0
 FNDA:0,swaggerDocs
@@ -604,13 +604,12 @@ DA:1,0
 DA:2,0
 DA:3,0
 DA:4,0
-DA:7,0
+DA:5,0
+DA:8,0
+DA:9,0
 DA:10,0
-DA:13,0
 DA:14,0
-DA:16,0
-DA:19,0
-LF:10
+LF:9
 LH:0
 BRF:0
 BRH:0
