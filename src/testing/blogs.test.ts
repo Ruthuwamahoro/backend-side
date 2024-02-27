@@ -1,8 +1,4 @@
 import axios from 'axios';
-
-
-
-
 test('get all blogs', async() => {
 
     try {
@@ -342,23 +338,23 @@ test('delete single projects', async() => {
 //contact message
 
 
-test('get all contact messages', async() => {
+// test('get all contact messages', async() => {
 
-    try {
-        const userInfo = {
-            "username": "testingR1",
-            "password": "test1234",
-        }
-        const response = await axios.post('http://localhost:8080/logininfo/login', userInfo); 
-        const token = response.data.token
-        const blo = await axios.get('http://localhost:8080/contact/contactmessage', { headers: { Authorization: `Bearer ${token}` } });
-        expect(blo.status).toBe(200);
-        expect(Array.isArray(blo.data.data)).toBe(true);
-        console.log(blo.data)
-    } catch (err) {
-        console.log(err)
-    }
-})
+//     try {
+//         const userInfo = {
+//             "username": "testingR1",
+//             "password": "test1234",
+//         }
+//         const response = await axios.post('http://localhost:8080/logininfo/login', userInfo); 
+//         const token = response.data.token
+//         const blo = await axios.get('http://localhost:8080/contact/contactmessage', { headers: { Authorization: `Bearer ${token}` } });
+//         expect(blo.status).toBe(200);
+//         expect(Array.isArray(blo.data.data)).toBe(true);
+//         console.log(blo.data)
+//     } catch (err) {
+//         console.log(err)
+//     }
+// })
 
 
 

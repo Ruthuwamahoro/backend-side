@@ -9,7 +9,7 @@ const axios = require('axios');
 test("test if the user register to an account", async() => {
     try{
         const userN = {
-            "email": "testing92@gmail.com",
+            "email": "testing04@gmail.com",
             "username": "testingR1",
             "password": "test1234",
             "ConfirmPassword": "test1234"
@@ -27,7 +27,7 @@ test("test if the user register to an account", async() => {
 test("test if the email exists in our database", async() => {
   try{
       const userN = {
-          "email": "testing1R0@gmail.com",
+          "email": "testeng98R0@gmail.com",
           "username": "testingR1",
           "password": "test1234",
           "ConfirmPassword": "test1234"
