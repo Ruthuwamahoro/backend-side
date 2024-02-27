@@ -1,5 +1,5 @@
-<h1 align="center">Hi 👋, I'm Ruth Uwamahoro</h1>
-<h3 align="center">A passionate developer from Rwanda</h3>
+<h1 align="center">Hi 👋, I'm Ruth Uwamahoro.</h1>
+<h3 align="center">A dedicated developer from Rwanda is building basic API endpoints for my portfolio using Node.js, Express, and MongoDB. Swagger docs are utilized to interact with and explore these API endpoints.</h3>
 
 <p align="left"> <img src="https://komarev.com/ghpvc/?username=ruthuwamahoro&label=Profile%20views&color=0e75b6&style=flat" alt="ruthuwamahoro" /> </p>
 
