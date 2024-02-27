@@ -8,6 +8,7 @@ import dotenv from 'dotenv'
 import passport from 'passport'
 import {Strategy, ExtractJwt} from 'passport-jwt'
 import { StrategyOptions } from 'passport-jwt';
+import axios from 'axios';
 dotenv.config()
 
 
@@ -51,6 +52,10 @@ async function allowUserToSubmitMessage(req:customD,res:Response,next:NextFuncti
         }
     })(req,res,next)
 }
+
+
+
+
 
 async function retrieveAllMessage(req:Request, res:Response, next:Function){
     passport.authenticate('jwt', {session: false}, async (err:any, user: any, info: any) => {

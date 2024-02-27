@@ -54,7 +54,13 @@ export async function authenticateToSeeAllBlogIn (req:Request, res:Response, nex
                 return res.status(400).json({status: 400, error: "invalid token"})
     
             }
-            const posts = await postModel.find();
+            //const posts = await postModel.find().populate({
+            //    path: 'comment',
+            //    options: {
+            //       strictPopulate : false
+            //   }
+            //});
+            const posts = await postModel.find()
             res.json({status: 200, data:posts});
         } catch(error){
             next(error)
@@ -65,7 +71,7 @@ export async function authenticateToSeeAllBlogIn (req:Request, res:Response, nex
     
 }
 
-async function authenticateToPostBlog (req:Request, res:Response, next: Function) {
+export async function authenticateToPostBlog (req:Request, res:Response, next: Function) {
     passport.authenticate('jwt', {session:false}, async(err:any, user:any, info:any)=>{
         try{
             if(err){

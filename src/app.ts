@@ -8,6 +8,7 @@ import projects from './routes/projects'
 import userRouter from './routes/userprofile'
 import * as dotenv from 'dotenv'
 import swaggerDocs from './validator/swagger';
+import commentRouter from './routes/comment'
 dotenv.config()
 const app = express()
 
@@ -17,6 +18,7 @@ app.use('/contact', contact)
 app.use('/logininfo', login)
 app.use('/project', projects)
 app.use('/adminprofile', userRouter)
+app.use('/api', commentRouter)
 app.use(express.json())
 const port:number = 8080
 mongoose.connect(process.env.DATABASE_URL!)

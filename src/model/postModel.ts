@@ -1,9 +1,13 @@
 import mongoose, {Schema, Document} from 'mongoose';
+import Comment from './commentSection'
 export interface Ipost extends Document {
     title: string;
     content: string;
     description: string;
     image: string;
+    Comment?: [{
+        type: Schema.Types.ObjectId,
+    }];
     created_at?: Date;
 
 }
@@ -25,6 +29,11 @@ const postSchema= new Schema<Ipost>({
         type: String,
         required: true
     },
+    //Comment: [{
+    //     type: Schema.Types.ObjectId,
+    //     ref: 'comment',
+    //     required: false
+    // }],
     created_at: { 
         type: Date, 
         default: Date.now 

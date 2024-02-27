@@ -161,7 +161,7 @@ test('delete single blog', async() => {
         const id = "63d6e0e0b4b5b5b5b5b5b5b5"
         const response = await axios.post('http://localhost:8080/logininfo/login', userInfo);
         const token = response.data.token 
-        const blo = await axios.post(`http://localhost:8080/project/deleteproject/${id}`);
+        const blo = await axios.post(`http://localhost:8080/project/deleteproject/${id}`, { headers: { Authorization: `Bearer ${token}` } });
         expect(blo.status).toBe(200);
         expect(blo.data).toBe("blog Deleted Successfully");
         console.log(blo.data)
