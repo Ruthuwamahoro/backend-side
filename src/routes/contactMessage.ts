@@ -1,6 +1,6 @@
 
 import express, { Request, Response , NextFunction, Router } from 'express'
-const router:Router = express.Router();
+const Crouter:Router = express.Router();
 import Contact, {contact} from "../model/contactInq";
 import jwt from 'jsonwebtoken';
 import Login from '../model/login'
@@ -16,86 +16,170 @@ interface customD extends Request {
     decoded?: any
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////////////
+// /////////////////////////////////////////////////////////////////////////////////////////////////
 
-//define middleware
+// //define middleware
 
-router.use(express.json())
-router.use(passport.initialize())
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-router.post('/contactmessage', allowUserToSubmitMessage)
-router.get('/contactmessage', retrieveAllMessage ) 
+Crouter.use(express.json())
+// router.use(passport.initialize())
 
 
-async function allowUserToSubmitMessage(req:customD,res:Response,next:NextFunction){
-    passport.authenticate('jwt', {session: false}, async(err:any, user:any, info:any) =>{
-        try{
-            if(err){
-                return next(err);
-            } if(!user){
-                return res.status(401).json({status: 401, error: "please login is required"})
-            }
-            const contact1:contact = new Contact({
-                fullName: req.body.fullName,
-                email: req.body.email,
-                message: req.body.message
-            })
-            const postMessage = await contact1.save();
-            res.json({status: "ok",copyAndUpdate: postMessage});
+// ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// router.post('/contactmessage', allowUserToSubmitMessage)
+// router.get('/contactmessage', retrieveAllMessage ) 
 
 
-        } catch(err){
-            next(err)
-        }
-    })(req,res,next)
-}
+// async function allowUserToSubmitMessage(req:customD,res:Response,next:NextFunction){
+//     passport.authenticate('jwt', {session: false}, async(err:any, user:any, info:any) =>{
+//         try{
+//             if(err){
+//                 return next(err);
+//             } if(!user){
+//                 return res.status(401).json({status: 401, error: "please login is required"})
+//             }
+//             const contact1:contact = new Contact({
+//                 fullName: req.body.fullName,
+//                 email: req.body.email,
+//                 message: req.body.message
+//             })
+//             const postMessage = await contact1.save();
+//             res.json({status: "ok",copyAndUpdate: postMessage});
 
 
+//         } catch(err){
+//             next(err)
+//         }
+//     })(req,res,next)
+// }
 
 
 
-async function retrieveAllMessage(req:Request, res:Response, next:Function){
-    passport.authenticate('jwt', {session: false}, async (err:any, user: any, info: any) => {
-        try{
-            if(err){
-                return next(err)
-            } 
-            if(!user) return res.status(401).json({status: 401, error: "please login is required"})
-            const contacts = await Contact.find();
-            res.json({messages: contacts})
-
-        } catch(err){
-            next(err)
-        }
-    })(req,res,next)
-
-}
 
 
-//////////////////////////////////////////////////////////////////////////////////////////////////
+// async function retrieveAllMessage(req:Request, res:Response, next:Function){
+//     passport.authenticate('jwt', {session: false}, async (err:any, user: any, info: any) => {
+//         try{
+//             if(err){
+//                 return next(err)
+//             } 
+//             if(!user) return res.status(401).json({status: 401, error: "please login is required"})
+//             const contacts = await Contact.find();
+//             res.json({messages: contacts})
 
-//defining startegy
+//         } catch(err){
+//             next(err)
+//         }
+//     })(req,res,next)
 
-const jwtOptions:StrategyOptions ={
-    jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-    secretOrKey: process.env.ACCESS_TOKEN_SECRET || 'heyyou'
-}
+// }
 
-passport.use(new Strategy(jwtOptions, async(jwtPayload, done:Function)=>{
+
+// //////////////////////////////////////////////////////////////////////////////////////////////////
+
+// //defining startegy
+
+// const jwtOptions:StrategyOptions ={
+//     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+//     secretOrKey: process.env.ACCESS_TOKEN_SECRET || 'heyyou'
+// }
+
+// passport.use(new Strategy(jwtOptions, async(jwtPayload, done:Function)=>{
+//     try{
+//         const user = await Login.findOne({username: jwtPayload.username});
+//         if(user){
+//             return done(null, user)
+//         } else {
+//             return done(null, false)
+//         }
+//     } catch(err){
+//         return done(err)
+//     }
+// }))
+
+// router.post('/contactmessage',authenticateUser, (async(req:customD,res:Response) => {
+//     const contact1:contact = new Contact({
+//         fullName: req.body.fullName,
+//         email: req.body.email,
+//         message: req.body.message
+//     })
+//     try{
+//         const postMessage = await contact1.save();
+//         res.json("send successfully")
+//     } catch(error){
+//         res.status(401).json({message: error})
+//     }
+// }))
+
+
+// router.get('/contactmessage',authenticateUser, (async(req:customD,res:Response) => {
+//     try{
+//         const postMessage = await Contact.find();
+//         res.json({status: "ok",messages: postMessage})
+//     } catch(error){
+//         res.status(401).json({message: error})
+//     }
+// }))
+
+
+
+// function authenticateUser (req:customD,res:Response,next:NextFunction){
+//     const getHeader = req.headers['authorization'];
+//     const getToken = getHeader && getHeader.split(' ')[1];
+//     console.log(getToken)
+//     if(!getToken) return res.json({error: "Permission Denied"})
+//     jwt.verify(getToken, process.env.ACCESS_TOKEN_SECRET!, (err: Error | null, decoded: any) => {
+//         if(err) return (res.status(401) as any).json({error: "invalid token"})
+//         req.decoded = decoded
+//         next()
+//     })
+
+// }
+// export default router; 
+
+
+Crouter.post('/contactmessage',authenticateUser, (async(req:customD,res:Response) => {
+    const contact = new Contact({
+        fullName: req.body.fullName,
+        email: req.body.email,
+        message: req.body.message
+    })
     try{
-        const user = await Login.findOne({username: jwtPayload.username});
-        if(user){
-            return done(null, user)
-        } else {
-            return done(null, false)
-        }
-    } catch(err){
-        return done(err)
+        const postMessage = await contact.save();
+        res.json("send successfully")
+    } catch(error){
+        res.status(401).json({message: error})
     }
 }))
 
+//check if the username is the one trying to access the contact form 
 
-export default router; 
+Crouter.get('/contactmessage',authenticateUser, async(req:customD,res:Response) => {
+    try{
+        const {name} = req.decoded
+        const contacts = await Contact.find({name: name});
+        //securing read operation
+
+        res.json(contacts);
+    } catch(err){
+        console.error({message: err});
+        res.status(500).send('Server error');
+    }
+})
+
+
+
+function authenticateUser (req:customD,res:Response,next:NextFunction){
+    const getHeader = req.headers['authorization'];
+    const getToken = getHeader && getHeader.split(' ')[1];
+    console.log(getToken)
+    if(!getToken) return res.json({error: "Permission Denied"})
+    jwt.verify(getToken, process.env.ACCESS_TOKEN_SECRET!, (err: Error | null, decoded: any) => {
+        if(err) return res.json({error: "invalid token"})
+         req.decoded = decoded
+         console.log(req.decoded)
+        next()
+    })
+
+}
+export default Crouter;

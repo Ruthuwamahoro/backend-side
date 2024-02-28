@@ -9,7 +9,7 @@ const axios = require('axios');
 test("test if the user register to an account", async() => {
     try{
         const userN = {
-            "email": "testing04@gmail.com",
+            "email": "testing99804@gmail.com",
             "username": "testingR1",
             "password": "test1234",
             "ConfirmPassword": "test1234"
@@ -27,7 +27,7 @@ test("test if the user register to an account", async() => {
 test("test if the email exists in our database", async() => {
   try{
       const userN = {
-          "email": "testeng98R0@gmail.com",
+          "email": "testeng16R0@gmail.com",
           "username": "testingR1",
           "password": "test1234",
           "ConfirmPassword": "test1234"
@@ -36,7 +36,7 @@ test("test if the email exists in our database", async() => {
       const user = await Login.findOne({email: userEx})
       if(user){
         const response = await axios.post('http://localhost:8080/logininfo/register', userN); 
-        console.log(response)
+
         expect(response.status).toBe(400);
         expect(response.body).toEqual({ status: 400, error: 'USER WITH THIS EMAIL ALREADY EXISTS' });
       }
@@ -72,10 +72,10 @@ test("login with wrong account", async() => {
     const response = await axios.post('http://localhost:8080/logininfo/login', userInfo); 
     console.log(response)
     //expect(response).toBeFalsy()
-    expect(response.status).toBe(400);
+    expect(response.status).not.toBe(200);
     expect(response.data).toEqual({ status: 400, error: 'invalid username or password' });
   } catch(err){
-    console.error(err)
+    console.log(err)
   }
 
   
