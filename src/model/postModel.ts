@@ -39,5 +39,5 @@ const postSchema= new Schema<Ipost>({
         default: Date.now 
     },
 });
-const postModel = mongoose.model<Ipost>('post', postSchema);
+const postModel = mongoose.model<Ipost>('post', postSchema)
 export default postModel

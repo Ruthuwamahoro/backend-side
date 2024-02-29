@@ -1,5 +1,4 @@
 import mongoose, {Schema, Document} from 'mongoose';
-import postModel from './postModel';
 export interface Icomment extends Document {
     commentMessage: string;
     postId: Schema.Types.ObjectId;
@@ -21,5 +20,5 @@ const commentSchema= new mongoose.Schema<Icomment>({
         default: Date.now 
     },
 });
-const Comment = mongoose.model<Icomment>('comment', commentSchema);
+const Comment = mongoose.model<Icomment>('comment', commentSchema)
 export default Comment

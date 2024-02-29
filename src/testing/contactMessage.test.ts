@@ -1,17 +1,39 @@
-import axios from 'axios';
-const fetchContactInfo = async() => {
-    const userInfo = {
-        "username": "testingR1",
-        "password": "test1234",
-    }
-    const response = await axios.post('http://localhost:8080/logininfo/login', userInfo); 
-    const token = response.data.token
-    const result = await axios.get('http://localhost:8080/contact/contactmessage', { headers: { Authorization: `Bearer ${token}` } });
-    console.log(result)
-    return result.data
-}
+import request from 'supertest';
+import passport from 'passport';
+import app from '../app';
+import Contact from '../model/contactInq'
+import { describe, jest, expect } from '@jest/globals';
+import axios from 'axios'
+import Login from '../model/login';
+import dotenv from 'dotenv'
 
-test('get all contact messages', async() => {
-    const result = await fetchContactInfo();
-    expect(result).toEqual({ status: 'ok', messages: expect.any(Array) });
+
+dotenv.config()
+
+let token: string | undefined = undefined;
+const api = process.env.API_URL
+beforeAll(async() => {
+    const userInfo = { "username": "uwamahoro9", "password": "12345678" }
+    const response = await axios.post('http://localhost:8080/logininfo/login', userInfo);
+    token = response.data.token
+})
+
+describe("testing addition of blogs", () => {
+
+  test("test contact messages", async() => {
+      const resultContact =  await request(app).get('/contact/contactmessage').set({ "Authorization": `Bearer ${token}` })
+      expect(resultContact.status).toBe(200);
+  })
+  
+  test(" post contact Message", async() => {
+      jest.spyOn(Contact.prototype, 'save').mockResolvedValueOnce("filename")
+      const TestAddMessage = await request(app).post('/contact/contactmessage').send({
+          fullName: "Ruth",
+          email: "This is my first post.",
+          message: "This is my first post.",
+      }).set({ Authorization: `Bearer ${token}` })
+      expect(TestAddMessage.status).toBe(200)
+
+  })
+  
 })

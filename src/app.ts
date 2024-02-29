@@ -5,7 +5,6 @@ import router from './routes/blogs'
 import Crouter from './routes/contactMessage'
 import login from './routes/login'
 import projects from './routes/projects'
-import userRouter from './routes/userprofile'
 import * as dotenv from 'dotenv'
 import swaggerDocs from './validator/swagger';
 //import commentRouter from './routes/comment'
@@ -17,7 +16,6 @@ app.use('/post', router)
 app.use('/contact', Crouter)
 app.use('/logininfo', login)
 app.use('/project', projects)
-app.use('/adminprofile', userRouter)
 // app.use('/api', commentRouter)
 app.use(express.json())
 const port:number = 8080

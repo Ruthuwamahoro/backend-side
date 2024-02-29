@@ -51,17 +51,11 @@ export async function authenticateToSeeAllBlogIn (req:Request, res:Response, nex
             }
             if(!user){
 
-                return res.status(400).json({status: 400, error: "invalid token"})
+                return res.status(500).json({status: 500, error: "invalid token"})
     
             }
-            //const posts = await postModel.find().populate({
-            //    path: 'comment',
-            //    options: {
-            //       strictPopulate : false
-            //   }
-            //});
             const posts = await postModel.find()
-            res.json({status: 200, data:posts});
+            res.status(200).json({status: 200, data:posts});
         } catch(error){
             next(error)
         }
@@ -142,11 +136,11 @@ async function deleteSingleBlog (req:Request, res:Response, next: Function) {
         } catch(error){
             next(error)
         }
-        
-
     })(req,res,next)
     
 }
+
+
 
 async function updateSingleBlog (req:Request, res:Response, next: Function) {
     passport.authenticate('jwt', {session:false}, async(err:any, user:any, info:any)=>{
@@ -167,7 +161,7 @@ async function updateSingleBlog (req:Request, res:Response, next: Function) {
             }, {new: true});
             if(updatedPost === null) res.status(400).json({status: 400, error: "id not found"})
             console.log(updatedPost)
-            res.json({status: "ok",copyAndUpdate:  updatedPost});
+            res.status(200).json({status: "ok",copyAndUpdate:  updatedPost});
         } catch(error){
             next(error)
         }
@@ -188,6 +182,8 @@ passport.use(new Strategy(jwtOptions, async(jwtPayload, done:Function)=>{
         const user = await Login.findOne({username: jwtPayload.username});
         if(user){
             return done(null, user)
+        } if(!user){
+            return done(null, false)
         } else {
             return done(null, false)
         }

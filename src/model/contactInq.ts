@@ -19,5 +19,5 @@ const contactMes = new mongoose.Schema<contact>({
     }
 })
 
-const Contact = mongoose.model<contact>('contact', contactMes);
+const Contact = mongoose.model<contact>('contact', contactMes)
 export default Contact
