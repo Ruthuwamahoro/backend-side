@@ -1,0 +1,19 @@
+name: testing project automatically
+
+on:
+  push:
+    branches:
+      - testing
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2 #get code from github repo
+      - uses: actions/setup-node@v2 #set up node.js
+        with:
+          node-version: '18'
+      - run: npm ci #to install dependencies
+      - run: npm test #run the test
+      - run: npm run build #to build
+      - run: npm run deploy 
