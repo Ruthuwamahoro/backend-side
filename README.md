@@ -13,19 +13,4 @@
 
 - 💬 Ask me about **Node.js,Express,Mongo,Documentation by using Swagger,Testing code**
 
-- 📫 How to reach me **r.uwamahoro@alustudent.com**
 
-<h3 align="left">Connect with me:</h3>
-<p align="left">
-<a href="https://linkedin.com/in/ruth-uwamahoro" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/linked-in-alt.svg" alt="ruth-uwamahoro" height="30" width="40" /></a>
-<a href="https://instagram.com/uwamahoro461" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/instagram.svg" alt="uwamahoro461" height="30" width="40" /></a>
-<a href="https://www.youtube.com/c/ruth uwamahoro" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/youtube.svg" alt="ruth uwamahoro" height="30" width="40" /></a>
-</p>
-
-
-
-<p><img align="left" src="https://github-readme-stats.vercel.app/api/top-langs?username=ruthuwamahoro&show_icons=true&locale=en&layout=compact" alt="ruthuwamahoro" /></p>
-
-<p>&nbsp;<img align="center" src="https://github-readme-stats.vercel.app/api?username=ruthuwamahoro&show_icons=true&locale=en" alt="ruthuwamahoro" /></p>
-
-<p><img align="center" src="https://github-readme-streak-stats.herokuapp.com/?user=ruthuwamahoro&" alt="ruthuwamahoro" /></p>
