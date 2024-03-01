@@ -1,4 +1,4 @@
-[![Coverage Status](https://coveralls.io/repos/github/Ruthuwamahoro/backend-side/badge.svg?branch=testing)](https://coveralls.io/github/Ruthuwamahoro/backend-side?branch=testing)
+[![Coverage Status](https://coveralls.io/repos/github/Ruthuwamahoro/backend-side/badge.svg?branch=master)](https://coveralls.io/github/Ruthuwamahoro/backend-side?branch=master)
 <h1 align="center">Hi 👋, I'm Ruth Uwamahoro.</h1>
 <h3 align="center">A dedicated developer from Rwanda is building basic API endpoints for my portfolio using Node.js, Express, and MongoDB. Swagger docs are utilized to interact with and explore these API endpoints.</h3>
 
