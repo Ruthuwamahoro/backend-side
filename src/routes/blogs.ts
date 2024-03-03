@@ -3,6 +3,7 @@
 //import necessary module
 
 import express, {Router} from 'express'
+import passport from 'passport'
 import multer from 'multer';
 import path from 'path'
 import { authenticateToSeeAllBlogIn, accessSingleBlog, authenticateToPostBlog, deleteSingleBlog, updateSingleBlog } from '../controllers/blogsController'
@@ -11,7 +12,8 @@ import { authenticateToSeeAllBlogIn, accessSingleBlog, authenticateToPostBlog, d
 
 
 const router:Router = express.Router();
-
+router.use(express.json())
+router.use(passport.initialize())
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
