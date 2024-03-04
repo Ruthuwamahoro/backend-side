@@ -86,15 +86,13 @@ router.post('/login',async(req:customD,res:Response, next: Function)=> {
         if(!user){
             return res.status(400).json({status: 400, error: "invalid username or password"})
         }
-        const existingUser = await Login.findOne({ username: req.body.username , password: req.body.password })
-        if(!existingUser) {
-            return res.status(400).json({status: 400, error: "username and/or password not found "})
-        }
-        const accessUser = {username: existingUser.username, password: existingUser.password}
+
+        const accessUser = {username:req.body.username, password: req.body.password}
 
         const token = jwt.sign(accessUser, process.env.ACCESS_TOKEN_SECRET!)
         res.cookie("token", token)
-        res.json({ status: "ok",message: "User logged in! Congrats",redirectTo:"../admin/dashboard.html", token: token})
+        res.header('Authorization', `Bearer ${token}`)
+        res.json({ status: "ok",message: "User logged in! Congrats", token: token})
         console.log("token", token)
 
         
