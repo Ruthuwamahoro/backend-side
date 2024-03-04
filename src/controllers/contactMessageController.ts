@@ -13,27 +13,35 @@ interface customD extends Request {
 }
 
 
-export async function allowUserToSubmitMessage(req:customD,res:Response,next:NextFunction){
-    passport.authenticate('jwt', {session: false}, async(err:any, user:any, info:any) =>{
-        try{
-            if(err){
-                return next(err);
-            } if(!user){
-                return res.status(401).json({status: 401, error: "please login is required"})
-            }
-            const contact1:contact = new Contact({
-                fullName: req.body.fullName,
-                email: req.body.email,
-                message: req.body.message
-            })
-            const postMessage = await contact1.save();
-            res.json({status: "ok",message: "Thank you for your message. We'll get back to you shortly."});
+// export async function allowUserToSubmitMessage(req:customD,res:Response,next:NextFunction){
+//         try{
+//             const contact1:contact = new Contact({
+//                 fullName: req.body.fullName,
+//                 email: req.body.email,
+//                 message: req.body.message
+//             })
+//             const postMessage = await contact1.save();
+//             res.json({status: "ok",message: "Thank you for your message. We'll get back to you shortly."});
 
 
-        } catch(err){
-            next(err)
-        }
-    })(req,res,next)
+//         } catch(err){
+//             next(err)
+
+// }
+
+export async function allowUserToSubmitMessage(req:Request, res:Response, next:NextFunction){
+    try{
+        const contact1:contact = new Contact({
+            fullName: req.body.fullName,
+            email: req.body.email,
+            message: req.body.message
+        })
+        const postMessage = await contact1.save();
+        res.json({status: "ok",message: "Thank you for your message. We'll get back to you shortly."});
+
+    } catch(e){
+        console.log(e)
+    }
 }
 
 
