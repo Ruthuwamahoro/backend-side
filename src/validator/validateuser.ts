@@ -15,6 +15,12 @@ const options = {
     stripUnknown: true
 }
 
+const contactMessageSchema = Joi.object({
+    fullName: Joi.string().required(),
+    email: Joi.string().email().required(),
+    message: Joi.string().required()
+})
 
-export  {registerSchema, options}
+
+export  {registerSchema, options, contactMessageSchema}
 

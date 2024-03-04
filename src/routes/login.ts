@@ -87,9 +87,15 @@ router.post('/login',(req:customD,res:Response, next: Function)=> {
             return res.status(400).json({status: 400, error: "invalid username or password"})
         }
         const accessUser = {username: req.body.username, password: req.body.password}
-        const token = jwt.sign(accessUser, process.env.ACCESS_TOKEN_SECRET!)
-        res.cookie("token", token)
-        res.json({ status: "ok",message: "User logged in! Congrats",redirectTo:"../admin/dashboard.html", token: token})
+        if(accessUser){
+            const token = jwt.sign(accessUser, process.env.ACCESS_TOKEN_SECRET!)
+            res.cookie("token", token)
+            res.json({ status: "ok",message: "User logged in! Congrats",redirectTo:"../admin/dashboard.html", token: token})
+            console.log("token", token)
+
+        } else {
+            return res.status(400).json({status: 400, error: "invalid username or password"})
+        }
         
     })(req,res,next)
     

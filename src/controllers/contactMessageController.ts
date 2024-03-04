@@ -4,6 +4,7 @@ import Contact, {contact} from "../model/contactInq";
 import Login from '../model/login'
 import dotenv from 'dotenv'
 import passport from 'passport'
+import { contactMessageSchema, options } from '../validator/validateuser';
 import {Strategy, ExtractJwt} from 'passport-jwt'
 import { StrategyOptions } from 'passport-jwt';
 dotenv.config()
@@ -31,6 +32,11 @@ interface customD extends Request {
 
 export async function allowUserToSubmitMessage(req:Request, res:Response, next:NextFunction){
     try{
+        const mess = contactMessageSchema.validate(req.body, options)
+        if(mess.error){
+            const messageError = mess.error.details.map((error:any) => error.message).join(', ')
+            return res.status(400).json({status: 400, error: messageError})
+        }
         const contact1:contact = new Contact({
             fullName: req.body.fullName,
             email: req.body.email,
