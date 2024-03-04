@@ -78,24 +78,25 @@ async function validateUser (username: string, password: string, done: Function)
 
 passport.use(new LocalStrategy(validateUser))
 
-router.post('/login',(req:customD,res:Response, next: Function)=> {
-    passport.authenticate('local', {session: false}, (err: Error, user: any) => {
+router.post('/login',async(req:customD,res:Response, next: Function)=> {
+    passport.authenticate('local', {session: false}, async(err: Error, user: any) => {
         if(err){
             return next(err)
         } 
         if(!user){
             return res.status(400).json({status: 400, error: "invalid username or password"})
         }
-        const accessUser = {username: req.body.username, password: req.body.password}
-        if(accessUser){
-            const token = jwt.sign(accessUser, process.env.ACCESS_TOKEN_SECRET!)
-            res.cookie("token", token)
-            res.json({ status: "ok",message: "User logged in! Congrats",redirectTo:"../admin/dashboard.html", token: token})
-            console.log("token", token)
-
-        } else {
-            return res.status(400).json({status: 400, error: "invalid username or password"})
+        const existingUser = await Login.findOne({ username: req.body.username , password: req.body.password })
+        if(!existingUser) {
+            return res.status(400).json({status: 400, error: "username and/or password not found "})
         }
+        const accessUser = {username: existingUser.username, password: existingUser.password}
+
+        const token = jwt.sign(accessUser, process.env.ACCESS_TOKEN_SECRET!)
+        res.cookie("token", token)
+        res.json({ status: "ok",message: "User logged in! Congrats",redirectTo:"../admin/dashboard.html", token: token})
+        console.log("token", token)
+
         
     })(req,res,next)
     
