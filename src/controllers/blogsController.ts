@@ -130,16 +130,11 @@ export async function updateSingleBlog (req:Request, res:Response, next: Functio
                 return res.status(400).json({status: 400, error: "invalid token"})
     
             }
-            const updatedPost = await postModel.findByIdAndUpdate(req.params.id, {
-                $set: {
-                    title: req.body.title,
-                    content: req.body.content,
-                    description: req.body.description
-                }
-            }, {new: true});
+            const newData = req.body
+            const updatedPost = await postModel.findByIdAndUpdate(req.params.id, newData, {new: true});
             if(updatedPost === null) res.status(400).json({status: 400, error: "id not found"})
             console.log(updatedPost)
-            res.status(200).json({status: "ok",copyAndUpdate:  updatedPost});
+            res.status(200).json({status: "ok",data:  updatedPost});
         } catch(error){
             next(error)
         }
