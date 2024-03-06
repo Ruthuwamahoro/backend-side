@@ -8,6 +8,7 @@ import axios from 'axios'
 import Login from '../model/login';
 import dotenv from 'dotenv'
 import multer from 'multer';
+import { logger } from 'bs-logger';
 
 dotenv.config()
 
@@ -106,6 +107,7 @@ describe("testing addition of blogs", () => {
         expect(accessWithInvalidToken.status).toBe(400);
 
     })
+    
     
 })
 

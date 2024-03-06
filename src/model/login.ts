@@ -17,7 +17,9 @@ const loginSchema = new mongoose.Schema<Ilogin>({
     password: {
         type: String,
         required: true
-    }
+    },
+    
+
 });
 
 const Login = mongoose.model<Ilogin>('login', loginSchema);
