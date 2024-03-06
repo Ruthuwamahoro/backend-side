@@ -70,6 +70,24 @@ export async function retrieveAllMessage(req:Request, res:Response, next:Functio
     })(req,res,next)
 
 }
+export async function deleteMessage(req:Request, res:Response, next:Function){
+    passport.authenticate('jwt', {session:false}, async(err:any, user:any, info:any)=>{
+        try{
+            if(err){
+                return next(err)
+            }
+            if(!user){
+                return res.status(400).json({status: 400, error: "invalid token"})
+    
+            }
+            const getId = req.params.id
+            await Contact.findByIdAndDelete(getId);
+            res.json({status: "ok",data:"successfully deleted messages"});
+        } catch(error){
+            next(error)
+        }
+    })(req,res,next)
+}
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////

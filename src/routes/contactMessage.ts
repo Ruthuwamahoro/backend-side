@@ -1,7 +1,7 @@
 
 import express, { Router } from 'express'
 import passport from 'passport'
-import { allowUserToSubmitMessage, retrieveAllMessage } from "../controllers/contactMessageController";
+import { allowUserToSubmitMessage, retrieveAllMessage, deleteMessage } from "../controllers/contactMessageController";
 // /////////////////////////////////////////////////////////////////////////////////////////////////
 //define middleware
 
@@ -15,6 +15,7 @@ Crouter.use(passport.initialize())
 
 Crouter.post('/contactmessage', allowUserToSubmitMessage)
 Crouter.get('/contactmessage', retrieveAllMessage ) 
+Crouter.delete('/deletemessage/:id', deleteMessage )
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
