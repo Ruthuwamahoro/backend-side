@@ -8,10 +8,12 @@ import projects from './routes/projects'
 import * as dotenv from 'dotenv'
 import swaggerDocs from './validator/swagger';
 //import commentRouter from './routes/comment'
+import cors from 'cors'
 dotenv.config()
 const app = express()
 
 app.use(bodyParser.urlencoded({ extended: true }))
+app.use(cors())
 app.use('/post', router)
 app.use('/contact', Crouter)
 app.use('/logininfo', login)

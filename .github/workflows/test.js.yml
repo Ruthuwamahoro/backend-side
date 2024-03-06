@@ -1,0 +1,32 @@
+name: Testing of my code
+
+on:
+  push:
+    branches:
+      - testing
+  pull_request:
+    branches:
+      - testing
+
+jobs:
+  tests:
+    name: continous rununning of my tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Getting code from my repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js version
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - name: Install npm  Dependencies
+        run: npm ci
+      - name: Coveralls Report
+        uses: coverallsapp/github-action@v2.2.3
+        env: 
+          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN}}
+
+      - name: Runing my tests by using coveralls tests
+        run: npm run coveralls 
