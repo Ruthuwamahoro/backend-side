@@ -106,9 +106,7 @@ describe("testing addition of blogs", () => {
         expect(addBlogPost.status).toBe(200);
         expect(accessWithInvalidToken.status).toBe(400);
 
-    })
-    
-    
+    })    
 })
 
 
