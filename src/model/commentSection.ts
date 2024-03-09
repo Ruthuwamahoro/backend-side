@@ -11,10 +11,6 @@ const commentSchema= new mongoose.Schema<Icomment>({
         type: String,
         required: true,
     },
-    postId:{
-        type: Schema.Types.ObjectId,
-        ref: 'post',
-    },
     created_at: { 
         type: Date, 
         default: Date.now 
