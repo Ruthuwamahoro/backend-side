@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 export interface Ilogin extends Document {
-    email: string,
+    email?: string,
     username: string,
     password: string,
 }
@@ -8,7 +8,6 @@ export interface Ilogin extends Document {
 const loginSchema = new mongoose.Schema<Ilogin>({
     email:{
         type: String,
-        required: true
     },
     username: {
         type: String,
@@ -18,8 +17,6 @@ const loginSchema = new mongoose.Schema<Ilogin>({
         type: String,
         required: true
     },
-    
-
 });
 
 const Login = mongoose.model<Ilogin>('login', loginSchema);

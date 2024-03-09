@@ -79,24 +79,30 @@ async function validateUser (username: string, password: string, done: Function)
 passport.use(new LocalStrategy(validateUser))
 
 router.post('/login',async(req:customD,res:Response, next: Function)=> {
-    passport.authenticate('local', {session: false}, async(err: Error, user: any) => {
-        if(err){
-            return next(err)
-        } 
-        if(!user){
-            return res.status(400).json({status: 400, error: "invalid username or password"})
-        }
+    try{
 
-        const accessUser = {username:req.body.username, password: req.body.password}
-
-        const token = jwt.sign(accessUser, process.env.ACCESS_TOKEN_SECRET!)
-        res.cookie("token", token)
-        res.header('Authorization', `Bearer ${token}`)
-        res.json({ status: "ok",message: "User logged in! Congrats", token: token})
-        console.log("token", token)
-
-        
-    })(req,res,next)
+        passport.authenticate('local', {session: false}, async(err: Error, user: any) => {
+            if(err){
+                return next(err)
+            }
+            if(!user){
+                return res.status(400).json({status: 400, error: "invalid username or password"})
+            }
+            
+            const accessUser = {username:req.body.username, password: req.body.password}
+            console.log(accessUser)
+            console.log("hello",accessUser)
+            const token =  jwt.sign(accessUser, process.env.ACCESS_TOKEN_SECRET!)
+            res.cookie("token", token)
+            res.header('Authorization', `Bearer ${token}`)
+            res.json({ status: "ok",message: "User logged in! Congrats", token: token})
+            console.log("token", token)
+    
+            
+        })(req,res,next)
+    } catch(err){
+        next(err)
+    }
     
 })
 
