@@ -5,6 +5,7 @@ import passport from 'passport';
 import { Strategy, ExtractJwt } from 'passport-jwt'
 import { StrategyOptions } from 'passport-jwt';
 import dotenv from 'dotenv'
+import fs from  'fs' 
 dotenv.config()
 
 
@@ -27,25 +28,15 @@ export async function authenticateToSeeAllBlogIn (req:Request, res:Response) {
 //handling access of single blog post
 
 
-export async function accessSingleBlog (req:Request, res:Response, next: Function) {
-    passport.authenticate('jwt', {session:false}, async(err:any, user:any, info:any)=>{
-        try{
-            if(err){
-                return next(err)
-            }
-            if(!user){
-                return res.status(400).json({status: 400, error: "invalid token"})
-    
-            }
-            const singlePost = await postModel.findById(req.params.id);
-            if(singlePost === null) res.status(400).json({status: 400, error: "id not found"})
-            res.json({status: "ok",data:singlePost});
-        } catch(error){
-            next(error)
-        }
-        
+export async function accessSingleBlog (req:Request, res:Response) {
+    try{
+        const singlePost = await postModel.findById(req.params.id);
+        if(singlePost === null) res.status(400).json({status: 400, error: "id not found"})
+        res.json({status: "ok",data:singlePost});
 
-    })(req,res,next)
+    } catch(err){
+        console.log(err)
+    }
     
 }
 
@@ -75,6 +66,7 @@ export async function authenticateToPostBlog (req:Request, res:Response, next: F
 
             });
             await post.save();
+
             res.json({status: "ok",data:"Successfully posted blog"});
         } catch(error){
             next(error)
