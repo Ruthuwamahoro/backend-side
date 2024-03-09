@@ -19,21 +19,14 @@ const jwtOptions: StrategyOptions = {  //const will throw error if the function 
 
 //handling retrieve of all project
 
-export async function allowUserToSeePostedProject(req:Request, res:Response, next:NextFunction) {
-    passport.authenticate('jwt', {session: false}, async(err:any, user:any, info:any) => {
-        try{
-            if(err){
-                return next()
-            }
-            if(!user){
-                return res.status(401).json({status: 400, error: "please login is required"})
-            }
-            const projects = await Project.find();
-            res.json({projects: projects})
-        } catch(err){
-            return next(err)
-        }
-    })(req,res,next)
+export async function allowUserToSeePostedProject(req:Request, res:Response) {
+    try{
+        const projects = await Project.find();
+        res.json({projects: projects})
+
+    } catch(err){
+        console.log(err)
+    }
 }
 
 //handling addition of project
@@ -65,22 +58,28 @@ export async function allowPostProject (req:Request, res:Response, next:NextFunc
 
 //handling update project
 
-export async function allowUpdateProject (req:Request, res:Response) {
-    try{
-        const updatePro = await Project.findByIdAndUpdate(req.params.id, {
-            $set: {
-                title: req.body.title,
-                content: req.body.content,
-                description: req.body.description
+export async function allowUpdateProject (req:Request, res:Response, next:NextFunction) {
+    passport.authenticate('jwt', {session: false}, async(err:any, user:any, info:any) => {
+        try{
+            if(err){
+                return next(err)
             }
-        }, {new: true});
-        if(updatePro === null)return res.json({error: "id not found"})
-        res.json("Project Updated Successfully")
-
-    }catch(err){
-        console.log(err)
-
-    }
+            if(!user){
+                return res.status(401).json({status: 401, error: "please login is required"})
+            }
+            const updatePro = await Project.findByIdAndUpdate(req.params.id, {
+                $set: {
+                    title: req.body.title,
+                    content: req.body.content,
+                    description: req.body.description
+                }
+            }, {new: true});
+            if(updatePro === null)return res.json({error: "id not found"})
+            res.json("Project Updated Successfully")
+        } catch(err){
+            return next(err)
+        }
+    })(req,res,next)
 }
 
 
