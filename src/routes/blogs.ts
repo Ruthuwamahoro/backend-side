@@ -6,7 +6,7 @@ import express, {Router} from 'express'
 import passport from 'passport'
 import multer from 'multer';
 import path from 'path'
-import { authenticateToSeeAllBlogIn, accessSingleBlog, authenticateToPostBlog, deleteSingleBlog, updateSingleBlog } from '../controllers/blogsController'
+import { authenticateToSeeAllBlogIn, accessSingleBlog, authenticateToPostBlog, deleteSingleBlog, updateSingleBlog} from '../controllers/blogsController'
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

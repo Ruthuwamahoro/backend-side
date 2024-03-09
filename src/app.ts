@@ -18,6 +18,7 @@ app.use('/post', router)
 app.use('/contact', Crouter)
 app.use('/logininfo', login)
 app.use('/project', projects)
+app.use('/uploads',express.static('uploads'))
 // app.use('/api', commentRouter)
 app.use(express.json())
 const port:number = 8080

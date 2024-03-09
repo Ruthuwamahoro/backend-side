@@ -6,6 +6,7 @@ import Login from '../model/login'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import passport from 'passport';
+import path from 'path'
 import {Strategy as LocalStrategy} from 'passport-local'
 import 'cookie-parser'
 import cookieParser from 'cookie-parser';
@@ -105,6 +106,13 @@ router.post('/login',async(req:customD,res:Response, next: Function)=> {
     }
     
 })
+
+
+// router.get('/logout', (req, res) => {
+//     res.clearCookie('token')
+//     res.json({status: "ok", message: "User logged out"})
+// })
+
 
 
 

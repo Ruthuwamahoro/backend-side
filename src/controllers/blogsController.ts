@@ -73,7 +73,8 @@ export async function authenticateToPostBlog (req:Request, res:Response, next: F
     
             }
             const {title, content, description} = req.body
-            const imagePath = `http://localhost:8080/${req.file?.filename}`
+            //const imagePath = `http://localhost:8080/uploads/${req.file?.filename}`
+            const imagePath = `http://localhost:8080/uploads/${req.file?.filename}`
              
             console.log(imagePath)
             const post:Ipost = new postModel({
