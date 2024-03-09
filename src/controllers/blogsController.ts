@@ -12,25 +12,14 @@ dotenv.config()
 
 //handling access of all blog posts
 
-export async function authenticateToSeeAllBlogIn (req:Request, res:Response, next: Function) {
-    passport.authenticate('jwt', {session:false}, async(err:any, user:any, info:any)=>{
-        try{
-            if(err){
-                return next(err)
-            }
-            if(!user){
-
-                return res.status(500).json({status: 500, error: "invalid token"})
-    
-            }
-            const posts = await postModel.find()
-            res.status(200).json({status: 200, data:posts});
-        } catch(error){
-            next(error)
-        }
-        
-
-    })(req,res,next)
+export async function authenticateToSeeAllBlogIn (req:Request, res:Response) {
+    try{
+        const posts = await postModel.find()
+        res.status(200).json({status: 200, data:posts});
+    } catch(err){
+        console.log(err)
+        res.status(400)
+    }
     
 }
 
