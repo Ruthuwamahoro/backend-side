@@ -3,10 +3,9 @@ export interface Ipost extends Document {
     title: string;
     content: string;
     description: string;
+    welcomeIntro: string;
+    introduction: string;
     image: string;
-    Comment?: [{
-        type: Schema.Types.ObjectId,
-    }];
     created_at?: Date;
 
 }
@@ -21,6 +20,15 @@ const postSchema= new Schema<Ipost>({
     },
     
     description: {
+        type: String,
+        required: true
+    },
+    welcomeIntro: {
+        type: String,
+        required: true
+    },
+
+    introduction:{
         type: String,
         required: true
     },

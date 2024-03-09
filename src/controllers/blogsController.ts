@@ -72,15 +72,16 @@ export async function authenticateToPostBlog (req:Request, res:Response, next: F
                 return res.status(400).json({status: 400, error: "invalid token"})
     
             }
-            const {title, content, description} = req.body
-            //const imagePath = `http://localhost:8080/uploads/${req.file?.filename}`
-            const imagePath = `http://localhost:8080/uploads/${req.file?.filename}`
+            const {title, content, description, welcomeIntro, introduction} = req.body
+            const imagePath = `https://brand-backend-side.onrender.com/uploads/${req.file?.filename}`
              
             console.log(imagePath)
             const post:Ipost = new postModel({
                 title,
                 content,
-                description ,
+                description,
+                welcomeIntro,
+                introduction,
                 image: imagePath || req.file || ''
 
             });
