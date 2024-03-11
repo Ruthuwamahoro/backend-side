@@ -14,22 +14,6 @@ interface customD extends Request {
 }
 
 
-// export async function allowUserToSubmitMessage(req:customD,res:Response,next:NextFunction){
-//         try{
-//             const contact1:contact = new Contact({
-//                 fullName: req.body.fullName,
-//                 email: req.body.email,
-//                 message: req.body.message
-//             })
-//             const postMessage = await contact1.save();
-//             res.json({status: "ok",message: "Thank you for your message. We'll get back to you shortly."});
-
-
-//         } catch(err){
-//             next(err)
-
-// }
-
 export async function allowUserToSubmitMessage(req:Request, res:Response, next:NextFunction){
     try{
         const mess = contactMessageSchema.validate(req.body, options)
