@@ -20,27 +20,43 @@ const jwtOptions = {
 }
 
 
-async function allowUserToPostComment(req:Request, res:Response, next:NextFunction) {
-    passport.authenticate('jwt', {session: false}, async(err:any, user: any , info: any) => {
-        try{
-            if(err){
-                return (err)
-            }
-            if(!user){
-                return res.json({status: 401, error: "please login is required"})
-            }
-            const newComment = new Comment ({
-                commentMessage: req.body.commentMessage,
-                postId: req.body.postId
-            })
-            await newComment.save()
-            res.json({status: "ok",comment: "send successfully"})
-            console.log("new com")
-        } catch(err){
+// async function allowUserToPostComment(req:Request, res:Response, next:NextFunction) {
+//     passport.authenticate('jwt', {session: false}, async(err:any, user: any , info: any) => {
+//         try{
+//             if(err){
+//                 return (err)
+//             }
+//             if(!user){
+//                 return res.json({status: 401, error: "please login is required"})
+//             }
+//             const newComment = new Comment ({
+//                 commentMessage: req.body.commentMessage,
+//                 postId: req.body.postId
+//             })
+//             await newComment.save()
+//             res.json({status: "ok",comment: "send successfully"})
+//             console.log("new com")
+//         } catch(err){
 
-        }
+//         }
 
-    })(req,res,next)
+//     })(req,res,next)
+// }
+
+export async function allowUserToPostComment(req:Request, res:Response) {
+    try{
+
+        const newComment = new Comment ({
+        commentMessage: req.body.commentMessage,
+        likes: req.body.likes
+        })
+        await newComment.save()
+        res.json({status: "ok",comment: "send successfully"})
+    } catch(err){
+        console.log(err)
+
+    }
+    
 }
 
 export async function accessSingleComment (req:Request, res:Response) {
