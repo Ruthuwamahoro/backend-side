@@ -1,7 +1,6 @@
 import mongoose, {Schema, Document} from 'mongoose';
 export interface Icomment extends Document {
     commentMessage: string;
-    postId: Schema.Types.ObjectId;
     likes?: Array<string>; 
     created_at?: Date;
 
@@ -10,6 +9,8 @@ const commentSchema= new mongoose.Schema<Icomment>({
     commentMessage: {
         type: String,
         required: true,
+    },
+    likes: {
     },
     created_at: { 
         type: Date, 
