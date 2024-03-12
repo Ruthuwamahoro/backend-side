@@ -2,7 +2,6 @@ import request from 'supertest';
 import passport from 'passport';
 import app from '../app';
 import postModel from '../model/postModel'
-//import { Response as SuperTest} from 'supertest';
 import { describe, jest, expect } from '@jest/globals';
 import axios from 'axios'
 import Login from '../model/login';
@@ -20,29 +19,6 @@ beforeAll(async() => {
     token = response.data.token
 })
 
-
-
-
-
-
-
-// describe("testing addition of blogs", () => {
-//     test("test get all blogs", async() => {
-//         const userInfo = { "username": "uwamahoro9", "password": "12345678" }
-        
-//         const response = await axios.post('http://localhost:8080/logininfo/login', userInfo);
-//         const token = response.data.token
-//         //get all blogs
-
-//         const resultBlogs =  await axios.get('http://localhost:8080/post/retrieveallpost', {
-//             headers: {
-//                 Authorization: `Bearer ${token}`
-//             }
-//         })
-//         console.log("----------------------------------------------", resultBlogs.data)
-//         expect(resultBlogs.status).toBe(200);
-//     })
-// })
 
 describe("testing addition of blogs", () => {
 
