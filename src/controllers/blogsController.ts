@@ -4,8 +4,7 @@ import Login from '../model/login'
 import passport from 'passport';
 import { Strategy, ExtractJwt } from 'passport-jwt'
 import { StrategyOptions } from 'passport-jwt';
-import dotenv from 'dotenv'
-import fs from  'fs' 
+import dotenv from 'dotenv' 
 dotenv.config()
 
 

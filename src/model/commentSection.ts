@@ -3,6 +3,7 @@ export interface Icomment extends Document {
     postId: Schema.Types.ObjectId;
     username: string;
     commentMessage: string;
+    likes: Schema.Types.ObjectId[];
     created_at?: Date;
 
 }
@@ -19,6 +20,7 @@ const commentSchema= new mongoose.Schema<Icomment>({
         type: String,
         required: true,
     },
+    likes: [{ type: Schema.Types.ObjectId, ref: 'login' }],
     created_at: { 
         type: Date, 
         default: Date.now 

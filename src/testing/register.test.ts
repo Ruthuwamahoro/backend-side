@@ -1,6 +1,4 @@
 import Login from "../model/login";
-import app from "../app";
-import supertest from "supertest";
 const axios = require('axios');
 
 

@@ -1,10 +1,8 @@
 import request from 'supertest';
-import passport from 'passport';
 import app from '../app';
 import Contact from '../model/contactInq'
 import { describe, jest, expect } from '@jest/globals';
 import axios from 'axios'
-import Login from '../model/login';
 import dotenv from 'dotenv'
 
 

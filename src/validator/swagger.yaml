@@ -599,6 +599,16 @@ paths:
         - comments
       summary: post comment based on blog id
       description: only authorized user can post comment based on particular id.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                commentMessage:
+                  type: string
+                  example: comment message
       parameters:
         - name: id
           in: path

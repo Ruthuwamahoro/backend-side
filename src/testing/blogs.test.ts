@@ -1,13 +1,10 @@
 import request from 'supertest';
-import passport from 'passport';
 import app from '../app';
 import postModel from '../model/postModel'
 import { describe, jest, expect } from '@jest/globals';
 import axios from 'axios'
-import Login from '../model/login';
 import dotenv from 'dotenv'
 import multer from 'multer';
-import { logger } from 'bs-logger';
 
 dotenv.config()
 

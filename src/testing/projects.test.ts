@@ -1,13 +1,8 @@
 import request from 'supertest';
-import passport from 'passport';
 import app from '../app';
-import postModel from '../model/postModel'
-//import { Response as SuperTest} from 'supertest';
 import { describe, jest, expect } from '@jest/globals';
 import axios from 'axios'
-import Login from '../model/login';
 import dotenv from 'dotenv'
-import multer from 'multer';
 import Project from '../model/projectsModel';
 
 dotenv.config()
