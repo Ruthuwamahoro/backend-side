@@ -24,7 +24,6 @@ components:
       description: Bearer Authentication
 security:
   - bearerAuth: []
-  - ApiKeyAuth: []
 
 paths:
   "/logininfo/register":
@@ -151,6 +150,8 @@ paths:
 
   "/post/postblog":
     post:
+      tags:
+        - blog
       summary: publish an article
       description: Only authenticated user can post blog.
       requestBody:
@@ -169,10 +170,18 @@ paths:
                 description:
                   type: string
                   example: description
+                welcomeIntro:
+                  type: string
+                  example: description
+                introduction:
+                  type: string
+                  example: description
+                comments:
+                  type: array
                 image:
                   type: string
                   format: binary
-              required: [title, content, description, image]
+              required: [title, content, description,welcomeIntro,introduction,comments,image]
       responses:
         "200":
           description: Success
@@ -188,10 +197,12 @@ paths:
                     type: string
                     example: blog created
 
-  # get single post
+#get single post
 
   "/post/getsinglepost/{id}":
     get:
+      tags:
+        - blog
       summary: get single blog
       description: Only authenticated user can see blog.
       parameters:
@@ -235,6 +246,8 @@ paths:
 
   "/post/deletepost/{id}":
     delete:
+      tags:
+        - blog
       summary: delete an article
       description: Only authenticated user can delete blog.
       parameters:
@@ -262,6 +275,8 @@ paths:
 
   "/post/updatepost/{id}":
     patch:
+      tags:
+        - blog
       summary: update an article
       description: Only authenticated user can update blog.
       consumes:
@@ -314,6 +329,7 @@ paths:
   "/project/getallprojects":
     get:
       tags:
+        - project
       summary: list all blog project of hosted on my portfolio
       description: User having account and already logged in can access this project.
       responses:
@@ -347,6 +363,8 @@ paths:
 
   "/project/postproject":
     post:
+      tags:
+        - project
       summary: publish an project
       description: Only authenticated user can publish project.
       requestBody:
@@ -380,51 +398,11 @@ paths:
                     type: string
                     example: project created
 
-  # "/project/getsinglepost/{id}":
-  #   get:
-  #     summary: publish an article
-  #     description: Only authenticated user can post blog.
-  #     parameters:
-  #       - name: id
-  #         in: path
-  #         required: true
-  #         schema:
-  #           type: string
-  #     responses:
-  #       "200":
-  #         description: Success
-  #         content:
-  #           application/json:
-  #             schema:
-  #               type: object
-  #               properties:
-  #                 status:
-  #                   type: string
-  #                   example: ok
-  #                 data:
-  #                   type: object
-  #                   properties:
-  #                     _id:
-  #                       type: string
-  #                       example: id
-  #                     title:
-  #                       type: string
-  #                       example: title
-  #                     content:
-  #                       type: string
-  #                       example: content
-  #                     description:
-  #                       type: string
-  #                       example: description
-  #                     image:
-  #                       type: string
-  #                     created_at:
-  #                       type: string
-
-  # delete single project
 
   "/project/deleteproject/{id}":
     delete:
+      tags:
+        - project
       summary: delete an project
       description: Only authenticated user can delete project.
       parameters:
@@ -452,6 +430,8 @@ paths:
 
   "/project/updateproject/{id}":
     patch:
+      tags:
+        - project
       summary: update  project
       description: Only authenticated user can update project.
       consumes:
@@ -507,3 +487,166 @@ paths:
                       demo:
                         type: string
                         example: description
+                      
+
+#contact messages
+#get all contact messages
+  "/contact/contactmessage":
+    get:
+      tags:
+        - contact messages
+      summary: display all messages
+      description: Any user can see all contact messages
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: ok
+
+
+#post message
+    "/contact/contactmessage":
+    post:
+      tags:
+        - contact messages
+      summary: send contact message inquires
+      description: any user can send messages.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                fullName:
+                  type: string
+                  example: Ruth uwamahoro
+                email:
+                  type: string
+                  example: ruth@gmail.com
+                message:
+                  type: string
+                  example: I want to hire you
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: ok
+                  message:
+                    type: string
+                    example: Thank you for your message
+
+
+#delete message
+  "/contact/deletemessage/{id}":
+    delete:
+      tags:
+        - contact messages
+      summary: delete contact messages
+      description: Only authenticated user can delete message.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: ok
+                  data:
+                    type: string
+                    example: message deleted
+
+#comments section
+#get all comments from user
+
+
+  "/api/getallcomment":
+    get:
+      tags:
+        - comments
+      summary: display all comments
+      description: any user can see all comments.
+      responses:
+        "200":
+          description: Success
+
+#post comment based on specific id
+
+  "/api/blog/{id}/postcomment":
+    post:
+      tags:
+        - comments
+      summary: post comment based on blog id
+      description: only authorized user can post comment based on particular id.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Success
+
+
+
+#delete comment
+
+  "/api/deletecomment/{id}":
+    delete:
+      tags:
+        - comments
+      summary: delete comment based on blog id
+      description: only authorized user can delete comment based.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Success
+
+
+#provide likes to comment
+
+  "/api/comment/:id/postlike":
+    post:
+      tags:
+        - comments
+      summary: getting likes from particular blog
+      description: only authorized user like.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Success
+
+
+
