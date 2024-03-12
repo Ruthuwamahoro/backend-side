@@ -15,7 +15,7 @@ dotenv.config()
 
 export async function authenticateToSeeAllBlogIn (req:Request, res:Response) {
     try{
-        const posts = await postModel.find()
+        const posts = await postModel.find().populate('comments');
         res.status(200).json({status: 200, data:posts});
     } catch(err){
         console.log(err)
@@ -30,7 +30,7 @@ export async function authenticateToSeeAllBlogIn (req:Request, res:Response) {
 
 export async function accessSingleBlog (req:Request, res:Response) {
     try{
-        const singlePost = await postModel.findById(req.params.id);
+        const singlePost = await postModel.findById(req.params.id).populate('comments');
         if(singlePost === null) res.status(400).json({status: 400, error: "id not found"})
         res.json({status: "ok",data:singlePost});
 

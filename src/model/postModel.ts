@@ -6,6 +6,7 @@ export interface Ipost extends Document {
     welcomeIntro: string;
     introduction: string;
     image: string;
+    comments: Array<string>;
     created_at?: Date;
 
 }
@@ -36,6 +37,7 @@ const postSchema= new Schema<Ipost>({
         type: String,
         required: true
     },
+    comments: [{ type: Schema.Types.ObjectId, ref: 'comments' }],
     created_at: { 
         type: Date, 
         default: Date.now 

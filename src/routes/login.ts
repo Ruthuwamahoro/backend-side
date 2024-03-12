@@ -1,120 +1,92 @@
-//login routes
-import express, { Request, Response , NextFunction, Router} from 'express'
-import {registerSchema, options} from '../validator/validateuser'
-const router:Router = express.Router();
-import Login from '../model/login'
-import bcrypt from 'bcryptjs'
-import jwt from 'jsonwebtoken'
+import express, { Request, Response, NextFunction, Router } from 'express';
+import { registerSchema, options } from '../validator/validateuser';
+import Login from '../model/login';
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 import passport from 'passport';
-import path from 'path'
-import {Strategy as LocalStrategy} from 'passport-local'
-import 'cookie-parser'
+import { Strategy as LocalStrategy } from 'passport-local';
 import cookieParser from 'cookie-parser';
 
-
-
-
 interface customD extends Request {
-    accessUser?: any
+    accessUser?: any;
 }
-require ('dotenv').config();
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+require('dotenv').config();
 
-//after dealing with function,next is to configure passport by calling initialize and session from express-session()
+const router: Router = express.Router();
 
-router.use(cookieParser())
-router.use(express.json())
-router.use(passport.initialize())
+router.use(cookieParser());
+router.use(express.json());
+router.use(passport.initialize());
 
-router.post('/register', async(req:customD,res:Response) => {
-    const result = registerSchema.validate(req.body, options)
-    if(result.error){
-        const messageError = result.error.details.map((error:any) => error.message).join(', ')
-        res.status(400).json({status:400,error: messageError})
-    } else {
-        const {email, username, password} = result.value
-        const checkexistingUser = await Login.findOne({email})
-        if(checkexistingUser){
-            return res.status(400).json({status: 400,error: "USER WITH THIS EMAIL ALREADY EXISTS"})
-        } else {
-            const saltRo = 10
-            bcrypt.hash(password, saltRo)
-                .then(async(hash) => {
-                
-                        const store =  new Login({
-                            email: email,
-                            username: username,
-                            password: hash,
-                            //confirm password is not stored in database because it is unneccessary data it is only used to verify whether user entered correct data
-                        })
-                        await store.save();
-                        res.json({status: "ok",message:"USER REGISTERED", redirectTo: "../login-page/login.html"})
-
-                })
-                .catch(() => {
-                    res.status(400).json({error: "SOMETHING WENT WRONG"})
-                })
-        }
-        
+router.post('/register', async (req: customD, res: Response) => {
+    const result = registerSchema.validate(req.body, options);
+    if (result.error) {
+        const messageError = result.error.details.map((error: any) => error.message).join(', ');
+        return res.status(400).json({ status: 400, error: messageError });
     }
-})
 
-
-
-
-async function validateUser (username: string, password: string, done: Function) {
+    const { email, username, password } = result.value;
     try {
-        const user = await Login.findOne({username})
-        if(!user || !await bcrypt.compare(password, user.password)){
-            return done(null, false, {message: "User not found"})
+        const checkExistingUser = await Login.findOne({ email });
+        if (checkExistingUser) {
+            return res.status(400).json({ status: 400, error: "User with this email already exists" });
         }
-        return done(null, user)
+
+        const saltRounds = 10;
+        const hash = await bcrypt.hash(password, saltRounds);
+        const newUser = new Login({ email, username, password: hash });
+        await newUser.save();
         
-    } catch(err){
-        return done(err)
+        res.json({ status: "ok", message: "User registered", redirectTo: "../login-page/login.html" });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ status: 500, error: "Something went wrong" });
+    }
+});
+
+async function validateUser(username: string, password: string, done: Function) {
+    try {
+        const user = await Login.findOne({ username });
+        if (!user || !(await bcrypt.compare(password, user.password))) {
+            return done(null, false, { message: "Invalid username or password" });
+        }
+        return done(null, user);
+    } catch (err) {
+        return done(err);
     }
 }
-//define strateg
 
-passport.use(new LocalStrategy(validateUser))
+passport.use(new LocalStrategy(validateUser));
 
-router.post('/login',async(req:customD,res:Response, next: Function)=> {
-    try{
-
-        passport.authenticate('local', {session: false}, async(err: Error, user: any) => {
-            if(err){
-                return next(err)
+router.post('/login', async (req: customD, res: Response, next: Function) => {
+    passport.authenticate('local', { session: false }, async (err: Error, user: any) => {
+        try {
+            if (err) {
+                return next(err);
             }
-            if(!user){
-                return res.status(400).json({status: 400, error: "invalid username or password"})
+            if (!user) {
+                return res.status(400).json({ status: 400, error: "Invalid username or password" });
             }
-            
-            const accessUser = {username:req.body.username, password: req.body.password}
-            console.log(accessUser)
-            console.log("hello",accessUser)
-            const token =  jwt.sign(accessUser, process.env.ACCESS_TOKEN_SECRET!)
-            res.cookie("token", token)
-            res.header('Authorization', `Bearer ${token}`)
-            res.json({ status: "ok",message: "User logged in! Congrats", token: token})
-            console.log("token", token)
-    
-            
-        })(req,res,next)
-    } catch(err){
-        next(err)
-    }
-    
-})
+            const adminUsername = process.env.ADMIN_USERNAME || "Admin";
+            const adminPassword = process.env.ADMIN_PASSWORD || "12345678";
 
+            if (user.username === adminUsername && req.body.password === adminPassword) {
+                user.role = 'admin';
+            } else {
+                user.role = 'user';
+            }
 
-// router.get('/logout', (req, res) => {
-//     res.clearCookie('token')
-//     res.json({status: "ok", message: "User logged out"})
-// })
+            const tokenPayload = { username: user.username, role: user.role };
+            const token = jwt.sign(tokenPayload, process.env.ACCESS_TOKEN_SECRET!);
 
+            res.cookie("token", token);
+            res.header('Authorization', `Bearer ${token}`);
+            res.json({ status: "ok", message: user.role === 'admin' ? "Admin" : "User", token });
+        } catch (err) {
+            next(err);
+        }
+    })(req, res, next);
+});
 
-
-
-
-export default router; 
+export default router;

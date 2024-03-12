@@ -5,11 +5,14 @@ import passport from 'passport'
 import { Strategy, ExtractJwt } from 'passport-jwt';
 import Login from '../model/login'
 import dotenv from 'dotenv'
+import postModel from '../model/postModel';
 dotenv.config()
 commentRouter.use(express.json())
 commentRouter.use(passport.initialize())
-commentRouter.post('/postcomment', allowUserToPostComment)
-commentRouter.get('/getcomment/:id', accessSingleComment)
+//commentRouter.post('/postcomment', allowUserToPostComment)
+commentRouter.post('/blog/:id/postcomment', allowUserToPostComment)
+//commentRouter.get('/getcomment/:id', accessSingleComment)
+// commentRouter.get('/blog/:id/getcomment', accessSingleComment)
 commentRouter.get('/getallcomment', authenticateToSeeAllCommentIn)
 commentRouter.delete('/deletecomment/:id', deleteSingleComment)
 
@@ -20,44 +23,65 @@ const jwtOptions = {
 }
 
 
-// async function allowUserToPostComment(req:Request, res:Response, next:NextFunction) {
-//     passport.authenticate('jwt', {session: false}, async(err:any, user: any , info: any) => {
-//         try{
-//             if(err){
-//                 return (err)
-//             }
-//             if(!user){
-//                 return res.json({status: 401, error: "please login is required"})
-//             }
-//             const newComment = new Comment ({
-//                 commentMessage: req.body.commentMessage,
-//                 postId: req.body.postId
-//             })
-//             await newComment.save()
-//             res.json({status: "ok",comment: "send successfully"})
-//             console.log("new com")
-//         } catch(err){
+// export async function allowUserToPostComment(req:Request, res:Response) {
+//     try{
 
-//         }
+//         const newComment = new Comment ({
+//         commentMessage: req.body.commentMessage,
+//         likes: req.body.likes
+//         })
+//         await newComment.save()
+//         res.json({status: "ok",comment: "send successfully"})
+//     } catch(err){
+//         console.log(err)
 
-//     })(req,res,next)
+//     }
+    
 // }
 
-export async function allowUserToPostComment(req:Request, res:Response) {
-    try{
 
-        const newComment = new Comment ({
-        commentMessage: req.body.commentMessage,
-        likes: req.body.likes
-        })
-        await newComment.save()
-        res.json({status: "ok",comment: "send successfully"})
-    } catch(err){
-        console.log(err)
 
-    }
+
+
+export async function allowUserToPostComment (req:Request, res:Response, next: Function) {
+    passport.authenticate('jwt', {session:false}, async(err:any, user:any, info:any)=>{
+        try{
+            if(err){
+                return next(err)
+            }
+            if(!user){
+                return res.status(400).json({status: 400, error: "invalid token"})
+    
+            }
+            const newComment = new Comment ({
+                postId: req.params.id,
+                commentMessage: req.body.commentMessage, 
+                username: req.body.username
+                
+            })
+            const comment = await newComment.save()
+            const getBlog = await postModel.findById(req.params.id);
+            if(!getBlog){
+                return res.json({error: "invalid id"})
+            }
+            getBlog.comments.push(comment._id)
+            await getBlog.save()
+            res.json({status: "ok",comment: comment})
+
+        } catch(error){
+            next(error)
+        }
+    })(req,res,next)
     
 }
+
+
+
+
+
+
+
+
 
 export async function accessSingleComment (req:Request, res:Response) {
     try{
